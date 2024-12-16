@@ -1,0 +1,17 @@
+{
+  "01": {
+    "name": "Factura",
+    "series": ["F003", "F004"],
+    "code": "01"
+  },
+  "03": {
+    "name": "Boleta",
+    "series": ["B003", "B007"],
+    "code": "03"
+  },
+  "07": {
+    "name": "Nota de Crédito",
+    "series": ["F003", "F004", "B003"],
+    "code": "07"
+  }
+}

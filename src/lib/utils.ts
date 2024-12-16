@@ -1,0 +1,300 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { map } from "zod";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const makeFacturaJSON = (voucher: any) => {
+  return {
+    anticipos: [],
+    close2u: {
+      numero: "",
+      tipoIntegracion: voucher[0].tipoIntegracion,
+      tipoPlantilla: voucher[0].tipoPlanilla,
+      tipoRegistro: voucher[0].tipoRegistro,
+    },
+    datosDocumento: {
+      condicionPago: voucher[0].condicionPago,
+      fechaEmision: voucher[0].fechaEmision,
+      fechaVencimiento: voucher[0].fechaVencimiento,
+      formaPago: voucher[0].formaPago,
+      glosa: voucher[0].glosa,
+      puntoEmisor: voucher[0].puntoEmisor,
+      moneda: voucher[0].monedaDatosDoc,
+      numero: voucher[0].numeroDatosDoc,
+      ordencompra: voucher[0].ordencompra,
+      serie: voucher[0].serie,
+    },
+    cuotas: [
+      {
+        numero: voucher[0].numeroCuota,
+        monto: voucher[0].monto,
+        fecha: voucher[0].fecha,
+        moneda: voucher[0].monedaCuota,
+      },
+    ],
+    descuentoGlobal: voucher[0].descuentoGlobal,
+    detalleDocumento: [
+      ...voucher.map((voucher: any) => ({
+        cantidad: voucher.cantidadArt,
+        codigoProducto: voucher.codigoProductoArt,
+        aliasProducto: null,
+        descripcion: voucher.descripcionArt,
+        descuento: {
+          monto: voucher.montoDescuentoArt,
+        },
+        isc: voucher.iscArt,
+        numeroOrden: voucher.numeroOrdenArt,
+        precioVentaUnitarioItem: voucher.precioVentaUnitarioItem,
+        tipoAfectacion: voucher.tipoAfectacion,
+        unidadMedida: voucher.unidadMedidaArt,
+        valorReferencialUnitarioItem: voucher.valorReferencialUnitarioItem,
+        valorVentaUnitarioItem: voucher.valorVentaUnitarioItem,
+      })),
+    ],
+    detraccion: voucher[0].detraccion,
+    emisor: {
+      correo: voucher[0].correo,
+      correoCopia: voucher[0].correoCopia,
+      domicilioFiscal: {
+        departamento: voucher[0].departamento,
+        direccion: voucher[0].direccion,
+        distrito: voucher[0].distrito,
+        pais: voucher[0].pais,
+        provincia: voucher[0].provincia,
+        ubigeo: voucher[0].ubigeo,
+        urbanizacion: voucher[0].urbanizacion,
+      },
+      nombreComercial: voucher[0].nombreComercial,
+      nombreLegal: voucher[0].nombreLegal,
+      numeroDocumentoIdentidad: voucher[0].numeroDocumentoIdentidad,
+      tipoDocumentoIdentidad: voucher[0].tipoDocumentoIdentidad,
+    },
+    facturaGuia: voucher[0].facturaGuia,
+    informacionAdicional: {
+      vendedor: voucher[0].vendedor,
+      tipoOperacion: voucher[0].tipoOperacion,
+    },
+    otrosCargos: voucher[0].otrosCargos,
+    percepcion: voucher[0].percepcion,
+    receptor: {
+      correo: voucher[0].correoReceptor,
+      correoCopia: voucher[0].correoCopiaReceptor,
+      domicilioFiscal: {
+        departamento: voucher[0].departamenteoReceptor,
+        direccion: voucher[0].direccionReceptor,
+        distrito: voucher[0].distritoReceptor,
+        pais: voucher[0].paisReceptor,
+        provincia: voucher[0].provinciaReceptor,
+        ubigeo: voucher[0].ubigeoReceptor,
+        urbanizacion: voucher[0].urbanizacionReceptor,
+      },
+      nombreComercial: voucher[0].nombreComercialReceptor,
+      nombreLegal: voucher[0].nombreLegalReceptor,
+      numeroDocumentoIdentidad: voucher[0].numeroDocumentoIdentidadReceptor,
+      tipoDocumentoIdentidad: voucher[0].tipoDocumentoIdentidadReceptor,
+    },
+    referencias: voucher[0].referencias,
+    sector: {
+      tipoTotalDescuentos: voucher[0].tipoTotalDescuentos,
+      tipoCargo: voucher[0].tipoCargo,
+    },
+  };
+};
+
+export const makeBoletaJSON = (voucher: any) => {
+  return {
+    anticipos: [],
+    close2u: {
+      numero: "",
+      tipoIntegracion: voucher[0].tipoIntegracion,
+      tipoPlantilla: voucher[0].tipoPlanilla,
+      tipoRegistro: voucher[0].tipoRegistro,
+    },
+    datosDocumento: {
+      condicionPago: voucher[0].condicionPago,
+      fechaEmision: voucher[0].fechaEmision,
+      fechaVencimiento: voucher[0].fechaVencimiento,
+      formaPago: voucher[0].formaPago,
+      glosa: voucher[0].glosa,
+      puntoEmisor: voucher[0].puntoEmisor,
+      moneda: voucher[0].monedaDatosDoc,
+      numero: voucher[0].numeroDatosDoc,
+      ordencompra: voucher[0].ordencompra,
+      serie: voucher[0].serie,
+    },
+    cuotas: [
+      {
+        numero: voucher[0].numeroCuota,
+        monto: voucher[0].monto,
+        fecha: voucher[0].fecha,
+        moneda: voucher[0].monedaCuota,
+      },
+    ],
+    descuentoGlobal: voucher[0].descuentoGlobal,
+    detalleDocumento: [
+      ...voucher.map((boleta: any) => ({
+        cantidad: boleta.cantidadArt,
+        codigoProducto: boleta.codigoProductoArt,
+        aliasProducto: null,
+        descripcion: boleta.descripcionArt,
+        descuento: {
+          monto: boleta.montoDescuentoArt,
+        },
+        isc: boleta.iscArt,
+        numeroOrden: boleta.numeroOrdenArt,
+        precioVentaUnitarioItem: boleta.precioVentaUnitarioItem,
+        tipoAfectacion: boleta.tipoAfectacion,
+        unidadMedida: boleta.unidadMedidaArt,
+        valorReferencialUnitarioItem: boleta.valorReferencialUnitarioItem,
+        valorVentaUnitarioItem: boleta.valorVentaUnitarioItem,
+      })),
+    ],
+    detraccion: voucher[0].detraccion,
+    emisor: {
+      correo: voucher[0].correo,
+      correoCopia: voucher[0].correoCopia,
+      domicilioFiscal: {
+        departamento: voucher[0].departamento,
+        direccion: voucher[0].direccion,
+        distrito: voucher[0].distrito,
+        pais: voucher[0].pais,
+        provincia: voucher[0].provincia,
+        ubigeo: voucher[0].ubigeo,
+        urbanizacion: voucher[0].urbanizacion,
+      },
+      nombreComercial: voucher[0].nombreComercial,
+      nombreLegal: voucher[0].nombreComercial,
+      numeroDocumentoIdentidad: voucher[0].numeroDocumentoIdentidad,
+      tipoDocumentoIdentidad: voucher[0].tipoDocumentoIdentidad,
+    },
+    facturaGuia: voucher[0].facturaGuia,
+    informacionAdicional: {
+      vendedor: voucher[0].vendedor,
+      tipoOperacion: voucher[0].tipoOperacion,
+    },
+    otrosCargos: voucher[0].otrosCargos,
+    percepcion: voucher[0].percepcion,
+    receptor: {
+      correo: voucher[0].correoReceptor,
+      correoCopia: voucher[0].correoCopiaReceptor,
+      domicilioFiscal: {
+        departamento: voucher[0].departamenteoReceptor,
+        direccion: voucher[0].direccionReceptor,
+        distrito: voucher[0].distritoReceptor,
+        pais: voucher[0].paisReceptor,
+        provincia: voucher[0].provinciaReceptor,
+        ubigeo: voucher[0].ubigeoReceptor,
+        urbanizacion: voucher[0].urbanizacionReceptor,
+      },
+      nombreComercial: voucher[0].nombreComercialReceptor,
+      nombreLegal: voucher[0].nombreLegalReceptor,
+      numeroDocumentoIdentidad: voucher[0].numeroDocumentoIdentidadReceptor,
+      tipoDocumentoIdentidad: voucher[0].tipoDocumentoIdentidadReceptor,
+    },
+    referencias: voucher[0].referencias,
+    sector: {
+      tipoTotalDescuentos: voucher[0].tipoTotalDescuentos,
+      tipoCargo: voucher[0].tipoCargo,
+    },
+  };
+};
+
+export const makeNotaCreditoJSON = (voucher: any) => {
+  return {
+    anticipos: [],
+    close2u: {
+      numero: "",
+      tipoIntegracion: voucher[0].tipoIntegracion,
+      tipoPlantilla: voucher[0].tipoPlanilla,
+      tipoRegistro: voucher[0].tipoRegistro,
+    },
+    comprobanteAjustado: {
+      fechaEmision: voucher[0].fechaEmisionDocAjus,
+      numero: voucher[0].numeroDatosDocAjus,
+      serie: voucher[0].serieAjus,
+      tipoDocumento: voucher[0].tipoDocumentoAjus,
+    },
+    datosDocumento: {
+      condicionPago: voucher[0].condicionPago,
+      fechaEmision: voucher[0].fechaEmision,
+      fechaVencimiento: voucher[0].fechaVencimiento,
+      formaPago: voucher[0].formaPago,
+      glosa: voucher[0].glosa,
+      puntoEmisor: voucher[0].puntoEmisor,
+      moneda: voucher[0].monedaDatosDoc,
+      numero: voucher[0].numeroDatosDoc,
+      ordencompra: voucher[0].ordencompra,
+      serie: voucher[0].serie,
+    },
+    descuentoGlobal: voucher[0].descuentoGlobal,
+    detalleDocumento: [
+      ...voucher.map((notaCredito: any) => ({
+        cantidad: notaCredito.cantidadArt,
+        codigoProducto: notaCredito.codigoProductoArt,
+        aliasProducto: null,
+        descripcion: notaCredito.descripcionArt,
+        descuento: {
+          monto: notaCredito.montoDescuentoArt,
+        },
+        isc: notaCredito.iscArt,
+        numeroOrden: notaCredito.numeroOrdenArt,
+        precioVentaUnitarioItem: notaCredito.precioVentaUnitarioItem,
+        tipoAfectacion: notaCredito.tipoAfectacion,
+        unidadMedida: notaCredito.unidadMedidaArt,
+        valorReferencialUnitarioItem: notaCredito.valorReferencialUnitarioItem,
+        valorVentaUnitarioItem: notaCredito.valorVentaUnitarioItem,
+      })),
+    ],
+    detraccion: voucher[0].detraccion,
+    emisor: {
+      correo: voucher[0].correo,
+      correoCopia: voucher[0].correoCopia,
+      domicilioFiscal: {
+        departamento: voucher[0].departamento,
+        direccion: voucher[0].direccion,
+        distrito: voucher[0].distrito,
+        pais: voucher[0].pais,
+        provincia: voucher[0].provincia,
+        ubigeo: voucher[0].ubigeo,
+        urbanizacion: voucher[0].urbanizacion,
+      },
+      nombreComercial: voucher[0].nombreComercial,
+      nombreLegal: voucher[0].nombreLegal,
+      numeroDocumentoIdentidad: voucher[0].numeroDocumentoIdentidad,
+      tipoDocumentoIdentidad: voucher[0].tipoDocumentoIdentidad,
+    },
+    facturaGuia: voucher[0].facturaGuia,
+    informacionAdicional: {
+      vendedor: voucher[0].vendedor,
+      tipoOperacion: voucher[0].tipoOperacion,
+    },
+    motivo: voucher[0].motivo,
+    otrosCargos: voucher[0].otrosCargos,
+    percepcion: voucher[0].percepcion,
+    receptor: {
+      correo: voucher[0].correoReceptor,
+      correoCopia: voucher[0].correoCopiaReceptor,
+      domicilioFiscal: {
+        departamento: voucher[0].departamenteoReceptor,
+        direccion: voucher[0].direccionReceptor,
+        distrito: voucher[0].distritoReceptor,
+        pais: voucher[0].paisReceptor,
+        provincia: voucher[0].provinciaReceptor,
+        ubigeo: voucher[0].ubigeoReceptor,
+        urbanizacion: voucher[0].urbanizacionReceptor,
+      },
+      nombreComercial: voucher[0].nombreComercialReceptor,
+      nombreLegal: voucher[0].nombreLegalReceptor,
+      numeroDocumentoIdentidad: voucher[0].numeroDocumentoIdentidadReceptor,
+      tipoDocumentoIdentidad: voucher[0].tipoDocumentoIdentidadReceptor,
+    },
+    referencias: voucher[0].referencias,
+    sector: {
+      tipoTotalDescuentos: voucher[0].tipoTotalDescuentos,
+      tipoCargo: voucher[0].tipoCargo,
+    },
+  };
+};
