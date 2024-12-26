@@ -1,4 +1,4 @@
-import { FileCode, LoaderCircle, Send } from "lucide-react";
+import { FileCode, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import {

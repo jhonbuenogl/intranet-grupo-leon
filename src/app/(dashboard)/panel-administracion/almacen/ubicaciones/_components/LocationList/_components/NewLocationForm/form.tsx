@@ -42,7 +42,7 @@ const NewLocationForm = ({ product }: Props) => {
     console.log(values);
 
     try {
-      const response = await sapHanaBackend.post("/product/add-location", {
+      await sapHanaBackend.post("/product/add-location", {
         ...values,
         code: product.codigo,
         sigla: product.sigla,

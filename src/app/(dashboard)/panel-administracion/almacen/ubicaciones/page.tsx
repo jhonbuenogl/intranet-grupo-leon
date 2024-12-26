@@ -1,6 +1,5 @@
 import React from "react";
 import LocationForm from "./_components/LocationForm/form";
-import axios from "axios";
 import sapHanaBackend from "@/axios/sapHanaBackend";
 import LocationList from "./_components/LocationList/list";
 

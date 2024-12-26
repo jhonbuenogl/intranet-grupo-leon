@@ -33,7 +33,7 @@ export const POST = async (req: NextRequest) => {
 
     if (docType === "01") {
       console.log("es factura");
-      const response = await axios.put(
+      await axios.put(
         "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/factura",
         makeFacturaJSON(voucher),
         {
@@ -42,7 +42,7 @@ export const POST = async (req: NextRequest) => {
       );
     } else if (docType === "03") {
       console.log("es boleta");
-      const response = await axios.put(
+      await axios.put(
         "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/boleta",
         makeBoletaJSON(voucher),
         {
@@ -51,7 +51,7 @@ export const POST = async (req: NextRequest) => {
       );
     } else if (docType === "07") {
       console.log("es nota de crédito");
-      const response = await axios.put(
+      await axios.put(
         "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/nota-credito",
         makeNotaCreditoJSON(voucher),
         {
@@ -71,7 +71,7 @@ export const POST = async (req: NextRequest) => {
         nombreLegalReceptor: voucher[0].nombreLegalReceptor,
         moneda: voucher[0].monedaDatosDoc,
         montoTotal: voucher[0].monto ? voucher[0].monto : "240.00",
-        createdBy: session.user?.name,
+        createdBy: session.user?.name as string,
       },
     });
 
@@ -80,7 +80,6 @@ export const POST = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error.response.data.message);
     if (axios.isAxiosError(error)) {
       if (error.response?.data.message) {
         return NextResponse.json(

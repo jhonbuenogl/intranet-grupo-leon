@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -16,10 +15,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Form } from "@/components/ui/form";
-import FormUploadButton from "../FormUploadButton/button";
 import { LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 
 const formSchema = z.object({});
 

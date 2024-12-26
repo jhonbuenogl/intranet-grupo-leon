@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Hand, MapPin, Plus, Trash2 } from "lucide-react";
+import { Check, MapPin, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {

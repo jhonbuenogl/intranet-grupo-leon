@@ -44,6 +44,7 @@ const ChangePasswordForm = () => {
         description: new Date().toLocaleString(),
       });
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error interno del servidor",
         description: "Intentalo de nuevo o intentalo más tarde",

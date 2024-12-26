@@ -27,7 +27,6 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import {
   BookOpen,
@@ -36,7 +35,6 @@ import {
   GlobeLock,
   LogOut,
   MapPinned,
-  Power,
   Send,
   Settings,
 } from "lucide-react";

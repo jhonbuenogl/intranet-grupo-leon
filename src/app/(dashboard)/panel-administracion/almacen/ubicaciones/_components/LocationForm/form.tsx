@@ -15,8 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import FormUploadButton from "@/components/(theme)/FormUploadButton/button";
 import { toast } from "@/hooks/use-toast";
-import axios from "axios";
-import sapHanaBackend from "@/axios/sapHanaBackend";
 
 const formSchema = z.object({
   sigla: z.string().min(1, { message: "Campo Obligatorio" }),
@@ -41,6 +39,7 @@ const LocationForm = () => {
         }, 1500);
       });
     } catch (error) {
+      console.log(error);
       toast({ title: "" });
     }
   };

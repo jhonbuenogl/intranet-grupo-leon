@@ -9,7 +9,7 @@ interface VoucherState {
 
 export const useVoucherStore = create<VoucherState>()((set) => ({
   voucher: null,
-  setVoucher: (voucher) => set((state) => ({ voucher: voucher })),
+  setVoucher: (voucher) => set(() => ({ voucher: voucher })),
   gettingVoucher: false,
-  setGettingVoucher: (by) => set((state) => ({ gettingVoucher: by })),
+  setGettingVoucher: (by) => set(() => ({ gettingVoucher: by })),
 }));

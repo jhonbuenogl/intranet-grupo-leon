@@ -3,8 +3,7 @@
 import { Voucher } from "@prisma/client";
 import { createColumnHelper } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Send, User } from "lucide-react";
-import Image from "next/image";
+import { User } from "lucide-react";
 import ColumnActions from "./ColumnActions/actions";
 
 const columnHelper = createColumnHelper<Voucher>();

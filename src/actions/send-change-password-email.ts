@@ -14,7 +14,7 @@ export const sendChangePasswordEmail = async (email: string) => {
 
   const mailOptions: SendMailOptions = {
     from: "sap@cbs.pe", // Dirección de correo del remitente
-    to: "jbueno@guruverso.com", // Dirección de correo del destinatario
+    to: email, // Dirección de correo del destinatario
     subject: "Cambia tu contraseña", // Asunto del correo
     html: `<div>
       <h2 class="">Puedes cambiar tu contraseña ingresando al siguiente enlace</h2>
