@@ -19,12 +19,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "@/hooks/use-toast";
-import { LoaderCircle, Send } from "lucide-react";
+import { FileCode, LoaderCircle, Send } from "lucide-react";
 import { useVoucherStore } from "@/zustand/VoucherStore/store";
 
 const DocumentObtainedTable = () => {
   const voucherStore = useVoucherStore((state) => state);
   const [gettingPDF, setGettingPDF] = React.useState(false);
+  const [gettingXML, setGettingXML] = React.useState(false);
 
   return (
     <Table>
@@ -42,7 +43,7 @@ const DocumentObtainedTable = () => {
       </TableHeader>
       <TableBody>
         <TableRow>
-          <TableCell className="font-medium">{`${voucherStore.voucher[0].tipoPlanilla}-${voucherStore.voucher[0].serie}-${voucherStore.voucher[0].numeroDatosDoc}`}</TableCell>
+          <TableCell className="font-medium">{`${voucherStore.voucher[0].tipoPlantilla}-${voucherStore.voucher[0].serie}-${voucherStore.voucher[0].numeroDatosDoc}`}</TableCell>
           <TableCell>
             {format(
               new Date(voucherStore.voucher[0].fechaEmision),
@@ -75,6 +76,7 @@ const DocumentObtainedTable = () => {
                             )}`.padStart(7, "0"),
                           })),
                         ],
+                        docType: voucherStore.voucher[0].docType,
                       }
                     );
 
@@ -129,14 +131,23 @@ const DocumentObtainedTable = () => {
                       try {
                         setGettingPDF(true);
 
+                        // const response = await axios.get(
+                        //   `/api/vouchers/api/get-pdf/${
+                        //     voucherStore.voucher[0].tipoPlantilla
+                        //   }/${`${parseInt(
+                        //     voucherStore.voucher[0].numeroDatosDoc
+                        //   )}`.padStart(7, "0")}/${
+                        //     voucherStore.voucher[0].serie
+                        //   }/${voucherStore.voucher[0].numeroDocumentoIdentidad}`
+                        // );
                         const response = await axios.get(
                           `/api/vouchers/api/get-pdf/${
-                            voucherStore.voucher[0].tipoPlanilla
+                            voucherStore.voucher[0].tipoPlantilla
                           }/${`${parseInt(
                             voucherStore.voucher[0].numeroDatosDoc
                           )}`.padStart(7, "0")}/${
                             voucherStore.voucher[0].serie
-                          }/${voucherStore.voucher[0].numeroDocumentoIdentidad}`
+                          }/10223161419`
                         );
 
                         const ruta = response.data.pdfURL;
@@ -179,6 +190,79 @@ const DocumentObtainedTable = () => {
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Descargar PDF</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </button>
+                </>
+              )}
+              {gettingXML ? (
+                <>
+                  <LoaderCircle
+                    className="w-4 h-4 animate-spin"
+                    strokeWidth={1}
+                  />
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={async () => {
+                      try {
+                        setGettingXML(true);
+
+                        // const response = await axios.get(
+                        //   `/api/vouchers/api/get-pdf/${
+                        //     voucherStore.voucher[0].tipoPlantilla
+                        //   }/${`${parseInt(
+                        //     voucherStore.voucher[0].numeroDatosDoc
+                        //   )}`.padStart(7, "0")}/${
+                        //     voucherStore.voucher[0].serie
+                        //   }/${voucherStore.voucher[0].numeroDocumentoIdentidad}`
+                        // );
+                        const response = await axios.get(
+                          `/api/vouchers/api/get-xml/${
+                            voucherStore.voucher[0].tipoPlantilla
+                          }/${`${parseInt(
+                            voucherStore.voucher[0].numeroDatosDoc
+                          )}`.padStart(7, "0")}/${
+                            voucherStore.voucher[0].serie
+                          }/10223161419`
+                        );
+
+                        const ruta = response.data.pdfURL;
+                        const a = document.createElement("a");
+                        a.href = `/pdf/${ruta.split("/").pop()}`;
+                        a.download = ruta.split("/").pop();
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+
+                        toast({
+                          title: "XML Obtenido correctamente",
+                          description: new Date().toLocaleString(),
+                        });
+                      } catch (error) {
+                        if (axios.isAxiosError(error)) {
+                          if (error.response?.data.error) {
+                            toast({
+                              title: error.response.data.error,
+                              description: new Date().toLocaleString(),
+                              variant: "destructive",
+                            });
+                          }
+                        }
+                      }
+
+                      setGettingXML(false);
+                    }}
+                  >
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <FileCode className="text-green-700" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Descargar XML</p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>

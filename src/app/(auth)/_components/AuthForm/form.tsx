@@ -20,6 +20,7 @@ import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Campo Obligatorio" }),
@@ -191,6 +192,17 @@ const AuthForm = ({ mode }: Props) => {
           />
         </form>
       </Form>
+
+      <div className="flex flex-col items-center py-4">
+        {mode === "login" && (
+          <Link
+            href={`/auth/change-password`}
+            className="hover:underline font-medium"
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
+        )}
+      </div>
     </div>
   );
 };

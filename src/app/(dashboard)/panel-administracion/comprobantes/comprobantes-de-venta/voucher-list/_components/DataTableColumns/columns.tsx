@@ -3,7 +3,7 @@
 import { Voucher } from "@prisma/client";
 import { createColumnHelper } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Send } from "lucide-react";
+import { Send, User } from "lucide-react";
 import Image from "next/image";
 import ColumnActions from "./ColumnActions/actions";
 
@@ -62,5 +62,15 @@ export const columns = [
       />
     ),
     header: "Acciones",
+  }),
+  columnHelper.accessor("createdBy", {
+    id: "Creado Por",
+    cell: (info) => (
+      <div className="flex items-center gap-2">
+        <User className="w-4 h-4" />
+        <span>{info.getValue()}</span>
+      </div>
+    ),
+    header: () => <div>Creado por</div>,
   }),
 ];

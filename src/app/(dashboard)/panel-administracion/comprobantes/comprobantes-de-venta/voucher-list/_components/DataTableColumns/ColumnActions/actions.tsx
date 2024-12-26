@@ -24,16 +24,52 @@ const ColumnActions = ({
   numeroDocumentoIdentidad,
 }: Props) => {
   const [gettingPDF, setGettingPDF] = useState(false);
+  const [gettingXML, setGettingXML] = useState(false);
 
   return (
     <div className="flex items-center gap-4">
-      {gettingPDF ? (
+      {gettingXML ? (
         <>
           <LoaderCircle className="w-4 h-4 animate-spin" strokeWidth={1} />
         </>
       ) : (
         <>
-          <div onClick={async () => {}}>
+          <div
+            onClick={async () => {
+              try {
+                setGettingXML(true);
+
+                const response = await axios.get(
+                  `/api/vouchers/api/get-xml/${docType}/${correlative}/${serie}/${numeroDocumentoIdentidad}`
+                );
+
+                const ruta = response.data.pdfURL;
+                const a = document.createElement("a");
+                a.href = `/pdf/${ruta.split("/").pop()}`;
+                a.download = ruta.split("/").pop();
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                toast({
+                  title: "XML Obtenido correctamente",
+                  description: new Date().toLocaleString(),
+                });
+              } catch (error) {
+                if (axios.isAxiosError(error)) {
+                  if (error.response?.data.error) {
+                    toast({
+                      title: error.response.data.error,
+                      description: new Date().toLocaleString(),
+                      variant: "destructive",
+                    });
+                  }
+                }
+              }
+
+              setGettingXML(false);
+            }}
+          >
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -43,7 +79,7 @@ const ColumnActions = ({
                   />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Descargar PDF</p>
+                  <p>Descargar XML</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

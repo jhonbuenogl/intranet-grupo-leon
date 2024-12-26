@@ -36,12 +36,12 @@ export const GET = async (
         "p5Hp14nCxoiYTQCMmN2rfnbn8iraY8rEotiPsPrkhFrIJxH8aX+6cJilmD1YK64B",
     };
 
-    const response = await axios.put(`${baseUrl}/consultarPdf`, requestBody, {
+    const response = await axios.put(`${baseUrl}/consultarXml`, requestBody, {
       headers,
     });
     console.log(process.cwd());
 
-    const pdfBase64 = response.data;
+    const pdfBase64 = response.data.xmlFirma;
 
     const pdfDirPath = path.join(process.cwd(), `/public/pdf/`);
 
@@ -50,14 +50,14 @@ export const GET = async (
 
     const outputPath = path.join(
       process.cwd(),
-      `/public/pdf/${docType}-${serie}-${correlative}.pdf`
+      `/public/pdf/${docType}-${serie}-${correlative}.zip`
     );
 
     fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
     console.log(`PDF Guardado en ${outputPath}`);
     return NextResponse.json(
-      { message: "PDF obtenido correctamente", pdfURL: outputPath },
+      { message: "XML obtenido correctamente", pdfURL: outputPath },
       { status: 200 }
     );
 

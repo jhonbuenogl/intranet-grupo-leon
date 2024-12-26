@@ -59,7 +59,12 @@ const IssueForm = () => {
       );
       // console.log(response);
 
-      voucherStore.setVoucher(response.data.voucher);
+      voucherStore.setVoucher(
+        response.data.voucher.map((voucher: any) => ({
+          ...voucher,
+          docType: values.documentType,
+        }))
+      );
     } catch (error) {
       console.log(error);
     }

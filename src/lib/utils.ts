@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { map } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -12,7 +11,7 @@ export const makeFacturaJSON = (voucher: any) => {
     close2u: {
       numero: "",
       tipoIntegracion: voucher[0].tipoIntegracion,
-      tipoPlantilla: voucher[0].tipoPlanilla,
+      tipoPlantilla: voucher[0].tipoPlantilla,
       tipoRegistro: voucher[0].tipoRegistro,
     },
     datosDocumento: {
@@ -86,7 +85,7 @@ export const makeFacturaJSON = (voucher: any) => {
         departamento: voucher[0].departamenteoReceptor,
         direccion: voucher[0].direccionReceptor,
         distrito: voucher[0].distritoReceptor,
-        pais: voucher[0].paisReceptor,
+        pais: voucher[0].paisReceptor.toUpperCase(),
         provincia: voucher[0].provinciaReceptor,
         ubigeo: voucher[0].ubigeoReceptor,
         urbanizacion: voucher[0].urbanizacionReceptor,
@@ -110,7 +109,7 @@ export const makeBoletaJSON = (voucher: any) => {
     close2u: {
       numero: "",
       tipoIntegracion: voucher[0].tipoIntegracion,
-      tipoPlantilla: voucher[0].tipoPlanilla,
+      tipoPlantilla: voucher[0].tipoPlantilla,
       tipoRegistro: voucher[0].tipoRegistro,
     },
     datosDocumento: {
@@ -184,7 +183,7 @@ export const makeBoletaJSON = (voucher: any) => {
         departamento: voucher[0].departamenteoReceptor,
         direccion: voucher[0].direccionReceptor,
         distrito: voucher[0].distritoReceptor,
-        pais: voucher[0].paisReceptor,
+        pais: voucher[0].paisReceptor.toUpperCase(),
         provincia: voucher[0].provinciaReceptor,
         ubigeo: voucher[0].ubigeoReceptor,
         urbanizacion: voucher[0].urbanizacionReceptor,
@@ -208,7 +207,7 @@ export const makeNotaCreditoJSON = (voucher: any) => {
     close2u: {
       numero: "",
       tipoIntegracion: voucher[0].tipoIntegracion,
-      tipoPlantilla: voucher[0].tipoPlanilla,
+      tipoPlantilla: voucher[0].tipoPlantilla,
       tipoRegistro: voucher[0].tipoRegistro,
     },
     comprobanteAjustado: {
@@ -281,7 +280,7 @@ export const makeNotaCreditoJSON = (voucher: any) => {
         departamento: voucher[0].departamenteoReceptor,
         direccion: voucher[0].direccionReceptor,
         distrito: voucher[0].distritoReceptor,
-        pais: voucher[0].paisReceptor,
+        pais: voucher[0].paisReceptor.toUpperCase(),
         provincia: voucher[0].provinciaReceptor,
         ubigeo: voucher[0].ubigeoReceptor,
         urbanizacion: voucher[0].urbanizacionReceptor,

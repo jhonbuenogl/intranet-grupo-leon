@@ -12,7 +12,10 @@ export default async function middleware(req: NextRequest) {
 
   if (!session && pathname.startsWith("/panel-administracion")) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
-  } else if (session && pathname.startsWith("/auth")) {
+  } else if (
+    session &&
+    (pathname === "/auth/login" || pathname === "/auth/register")
+  ) {
     return NextResponse.redirect(new URL("/panel-administracion", req.url));
   }
 

@@ -1,5 +1,14 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -12,9 +21,12 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
+  PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
-import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -25,10 +37,20 @@ const DataTable = <TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) => {
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 5,
+  });
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      pagination,
+    },
+    onPaginationChange: setPagination,
   });
 
   return (
@@ -73,6 +95,50 @@ const DataTable = <TData, TValue>({
           )}
         </TableBody>
       </Table>
+
+      <div className="flex items-center justify-between gap-8 mt-8">
+        <div></div>
+        <div className="flex items-center gap-8">
+          <Button
+            variant={`outline`}
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <ChevronLeft />
+          </Button>
+          <Button
+            variant={`outline`}
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <ChevronRight />
+          </Button>
+        </div>
+        <div>
+          <Label>Comprobantes por página</Label>
+
+          <Select
+            value={`${pagination.pageSize}`}
+            onValueChange={(value) =>
+              setPagination({
+                pageIndex: pagination.pageIndex,
+                pageSize: parseInt(value),
+              })
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecciona una cantidad" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="3">3</SelectItem>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
     </div>
   );
 };

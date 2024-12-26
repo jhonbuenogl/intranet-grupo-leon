@@ -14,7 +14,7 @@ const DocumentObtained = () => {
         <>
           {voucherStore.gettingVoucher ? (
             <>
-              <div>
+              <div className="py-10 flex items-center justify-center flex-col gap-3">
                 <Search className="animate-pulse" />
                 <p>Buscando documento...</p>
               </div>
@@ -31,7 +31,7 @@ const DocumentObtained = () => {
                 </>
               ) : (
                 <>
-                  <div>
+                  <div className="py-10 flex items-center justify-center flex-col gap-3">
                     <FileX2 />
                     <p>No se encontraron resultados para la búsqueda</p>
                   </div>
