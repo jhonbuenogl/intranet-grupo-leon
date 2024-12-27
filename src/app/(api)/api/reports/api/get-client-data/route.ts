@@ -18,18 +18,18 @@ export const GET = async () => {
 
     console.log(users);
 
-    const mailOptions: SendMailOptions = {
-      from: "sap@cbs.pe", // Dirección de correo del remitente
-      to: "jbueno@guruverso.com", // Dirección de correo del destinatario
-      subject: "Prueba de correo desde Node.js", // Asunto del correo
-      html: `<div>Hola mundo</div>`,
-      // Puedes adjuntar archivos si lo necesitas:
-      // attachments: [
-      //   { filename: 'documento.pdf', path: 'ruta/a/tu/archivo.pdf' }
-      // ]
-    };
+    // const mailOptions: SendMailOptions = {
+    //   from: "sap@cbs.pe", // Dirección de correo del remitente
+    //   to: "jbueno@guruverso.com", // Dirección de correo del destinatario
+    //   subject: "Prueba de correo desde Node.js", // Asunto del correo
+    //   html: `<div>Hola mundo</div>`,
+    //   // Puedes adjuntar archivos si lo necesitas:
+    //   // attachments: [
+    //   //   { filename: 'documento.pdf', path: 'ruta/a/tu/archivo.pdf' }
+    //   // ]
+    // };
 
-    await nodemailerTransporter.sendMail(mailOptions);
+    // await nodemailerTransporter.sendMail(mailOptions);
 
     return NextResponse.json(
       { message: "Correo enviado exitosamente", users },
