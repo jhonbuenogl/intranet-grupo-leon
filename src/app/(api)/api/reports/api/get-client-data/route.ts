@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
-    const clientResponse = await sapHanaBackend.get("/report-data/client-data");
+    // const clientResponse = await sapHanaBackend.get("/report-data/client-data");
 
-    console.log(clientResponse.data.clientData);
+    // console.log(clientResponse.data.clientData);
 
     const users = await prisma.user.findMany();
 
