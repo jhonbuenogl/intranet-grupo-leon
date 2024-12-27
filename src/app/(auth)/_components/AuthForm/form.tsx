@@ -101,7 +101,7 @@ const AuthForm = ({ mode }: Props) => {
   };
 
   return (
-    <div className="w-full max-w-[360px] flex flex-col gap-4">
+    <div className="w-full max-w-[360px] flex flex-col gap-4 px-6">
       <div className="flex flex-col gap-2">
         <Logo width=" w-52 mx-auto py-3" />
         <h2 className="text-2xl font-bold">
