@@ -1,4 +1,5 @@
 import sapHanaBackend from "@/axios/sapHanaBackend";
+import prisma from "@/db/db";
 import nodemailerTransporter from "@/lib/nodemailer";
 import { NextResponse } from "next/server";
 import { SendMailOptions } from "nodemailer";
@@ -12,6 +13,10 @@ export const GET = async () => {
     // const htmlClients = clientResponse.data.clientData.map(client => (
     //   <div></div>
     // ))
+
+    const users = await prisma.user.findMany();
+
+    console.log(users);
 
     const mailOptions: SendMailOptions = {
       from: "sap@cbs.pe", // Dirección de correo del remitente
@@ -27,7 +32,7 @@ export const GET = async () => {
     await nodemailerTransporter.sendMail(mailOptions);
 
     return NextResponse.json(
-      { message: "Correo enviado exitosamente" },
+      { message: "Correo enviado exitosamente", users },
       { status: 200 }
     );
   } catch (error) {
