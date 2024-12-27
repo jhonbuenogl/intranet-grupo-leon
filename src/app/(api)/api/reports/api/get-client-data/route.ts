@@ -1,8 +1,6 @@
 import sapHanaBackend from "@/axios/sapHanaBackend";
 import prisma from "@/db/db";
-import nodemailerTransporter from "@/lib/nodemailer";
 import { NextResponse } from "next/server";
-import { SendMailOptions } from "nodemailer";
 
 export const GET = async () => {
   try {
