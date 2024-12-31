@@ -54,7 +54,7 @@ const DocumentObtainedTable = () => {
           <TableCell>{voucherStore.voucher[0].monedaDatosDoc}</TableCell>
           <TableCell>240.00</TableCell>
           <TableCell>{voucherStore.voucher[0].monto}</TableCell>
-          <TableCell>
+          <TableCell suppressHydrationWarning>
             <div className="flex gap-4  items-center">
               <AlertDialogForm
                 submitButtonLoadingText="Enviando..."
@@ -71,7 +71,7 @@ const DocumentObtainedTable = () => {
                           ...voucherStore.voucher.map((item: any) => ({
                             ...item,
                             numeroDatosDoc: `${parseInt(
-                              voucherStore.voucher[0].numeroDatosDoc
+                              voucherStore.voucher[0].numeroDatosDoc + 2
                             )}`.padStart(7, "0"),
                           })),
                         ],
@@ -125,7 +125,7 @@ const DocumentObtainedTable = () => {
                 </>
               ) : (
                 <>
-                  <button
+                  <div
                     onClick={async () => {
                       try {
                         setGettingPDF(true);
@@ -192,7 +192,7 @@ const DocumentObtainedTable = () => {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-                  </button>
+                  </div>
                 </>
               )}
               {gettingXML ? (
@@ -204,7 +204,7 @@ const DocumentObtainedTable = () => {
                 </>
               ) : (
                 <>
-                  <button
+                  <div
                     onClick={async () => {
                       try {
                         setGettingXML(true);
@@ -265,7 +265,7 @@ const DocumentObtainedTable = () => {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-                  </button>
+                  </div>
                 </>
               )}
             </div>

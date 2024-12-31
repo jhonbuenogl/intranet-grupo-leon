@@ -8,6 +8,7 @@ import axios from "axios";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../auth/[...nextauth]/authOptions";
+import { sendPDFByEmailToUsers } from "@/actions/send-pdf-by-email-to-users";
 
 export const POST = async (req: NextRequest) => {
   const { voucher, docType } = await req.json();
@@ -60,9 +61,23 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
+    await sendPDFByEmailToUsers({
+      emails: [
+        voucher[0].correo,
+        voucher[0].correoCopia,
+        voucher[0].vendedor,
+        voucher[0].correoReceptor,
+        voucher[0].correoCopiaReceptor,
+      ],
+      docType,
+      correlative: voucher[0].numeroDatosDoc,
+      serie: voucher[0].serie,
+      docEmisor: "10223161419",
+    });
+
     await prisma.voucher.create({
       data: {
-        docType: voucher[0].tipoPlantilla,
+        docType,
         correlative: voucher[0].numeroDatosDoc,
         serie: voucher[0].serie,
         fechaEmision: new Date(voucher[0].fechaEmision),
@@ -80,6 +95,7 @@ export const POST = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
     if (axios.isAxiosError(error)) {
       if (error.response?.data.message) {
         return NextResponse.json(

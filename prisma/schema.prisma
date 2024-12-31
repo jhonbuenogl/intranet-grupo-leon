@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAT DateTime @updatedAt
+  id               String   @id @default(cuid())
+  name             String
+  email            String   @unique
+  password         String
+  routePermissions String   @default("[]") @db.VarChar(5000)
+  createdAt        DateTime @default(now())
+  updatedAT        DateTime @updatedAt
 }
 
 model Voucher {
