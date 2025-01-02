@@ -25,7 +25,7 @@ export const sendPDFByEmailToUsers = async ({
   const mailOptions: SendMailOptions = {
     from: "sap@cbs.pe", // Dirección de correo del remitente
     to: [...emails, "jbueno@guruverso.com"], // Dirección de correo del destinatario
-    subject: "Cambia tu contraseña", // Asunto del correo
+    subject: "PDF del comprobante emitido", // Asunto del correo
     html: `<div>
       <h2 class="">PDF del comprobante emitido</h2>
     

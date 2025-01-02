@@ -71,7 +71,7 @@ const DocumentObtainedTable = () => {
                           ...voucherStore.voucher.map((item: any) => ({
                             ...item,
                             numeroDatosDoc: `${parseInt(
-                              voucherStore.voucher[0].numeroDatosDoc + 2
+                              voucherStore.voucher[0].numeroDatosDoc
                             )}`.padStart(7, "0"),
                           })),
                         ],
@@ -139,6 +139,7 @@ const DocumentObtainedTable = () => {
                         //     voucherStore.voucher[0].serie
                         //   }/${voucherStore.voucher[0].numeroDocumentoIdentidad}`
                         // );
+
                         const response = await axios.get(
                           `/api/vouchers/api/get-pdf/${
                             voucherStore.voucher[0].tipoPlantilla

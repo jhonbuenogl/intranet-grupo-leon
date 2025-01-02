@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import IntranetRoutes from "../IntranetRoutes/intranetRoutes";
 import { User } from "@prisma/client";
 import SavePermissionsButton from "../SavePermissionsButton/button";
@@ -13,10 +13,6 @@ const IntranetRoutesContainer = ({ user }: Props) => {
   const [userRoutePermissions, setUserRoutePermissions] = useState(
     JSON.parse(user?.routePermissions as string)
   );
-
-  useEffect(() => {
-    console.log(userRoutePermissions);
-  }, [userRoutePermissions]);
 
   return (
     <div className="py-6 flex flex-col gap-8">

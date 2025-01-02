@@ -18,16 +18,16 @@ export const GET = async (
   try {
     const { docType, correlative, serie, docEmisor } = await params;
 
-    const outputPath = await getVoucherPDFPath({
+    const response = await getVoucherPDFPath({
       docEmisor,
       docType,
       serie,
       correlative,
     });
 
-    console.log(`PDF Guardado en ${outputPath}`);
+    console.log(`PDF Guardado en ${response.outputPath}`);
     return NextResponse.json(
-      { message: "PDF obtenido correctamente", pdfURL: outputPath },
+      { message: "PDF obtenido correctamente", pdfURL: response.outputPath },
       { status: 200 }
     );
   } catch (error) {
