@@ -43,21 +43,23 @@ export const GET = async (
 
     const pdfBase64 = response.data.xmlFirma;
 
-    const pdfDirPath = path.join(process.cwd(), `/public/pdf/`);
+    const pdfDirPath = path.join(process.cwd(), `/public/vouchers/`);
 
     await fsp.rm(pdfDirPath, { recursive: true, force: true });
     await fsp.mkdir(pdfDirPath, { recursive: true });
 
     const outputPath = path.join(
       process.cwd(),
-      `/public/pdf/${docType}-${serie}-${correlative}.zip`
+      `/public/vouchers/${docType}-${serie}-${correlative}.zip`
     );
+
+    const downloadPath = `/vouchers/${docType}-${serie}-${correlative}.zip`;
 
     fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
     console.log(`PDF Guardado en ${outputPath}`);
     return NextResponse.json(
-      { message: "XML obtenido correctamente", pdfURL: outputPath },
+      { message: "XML obtenido correctamente", pdfURL: downloadPath },
       { status: 200 }
     );
 

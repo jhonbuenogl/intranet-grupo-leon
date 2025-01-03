@@ -45,8 +45,8 @@ const ColumnActions = ({
 
                 const ruta = response.data.pdfURL;
                 const a = document.createElement("a");
-                a.href = `/pdf/${ruta.split("/").pop()}`;
-                a.download = `/pdf/${ruta.split("/").pop()}`;
+                a.href = ruta;
+                a.download = ruta;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
@@ -103,8 +103,8 @@ const ColumnActions = ({
 
                 const ruta = response.data.pdfURL;
                 const a = document.createElement("a");
-                a.href = `/pdf/${ruta.split("/").pop()}`;
-                a.download = `/pdf/${ruta.split("/").pop()}`;
+                a.href = ruta;
+                a.download = ruta;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
