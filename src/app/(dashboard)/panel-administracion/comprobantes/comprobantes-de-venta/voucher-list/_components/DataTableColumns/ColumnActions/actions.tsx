@@ -40,7 +40,7 @@ const ColumnActions = ({
                 setGettingXML(true);
 
                 const response = await axios.get(
-                  `/api/vouchers/api/get-xml/${docType}/${correlative}/${serie}/10223161419`
+                  `/api/vouchers/api/get-xml/${docType}/${correlative}/${serie}/${numeroDocumentoIdentidad}`
                 );
 
                 const ruta = response.data.pdfURL;
@@ -98,7 +98,7 @@ const ColumnActions = ({
                 setGettingPDF(true);
 
                 const response = await axios.get(
-                  `/api/vouchers/api/get-pdf/${docType}/${correlative}/${serie}/10223161419`
+                  `/api/vouchers/api/get-pdf/${docType}/${correlative}/${serie}/${numeroDocumentoIdentidad}`
                 );
 
                 const ruta = response.data.pdfURL;

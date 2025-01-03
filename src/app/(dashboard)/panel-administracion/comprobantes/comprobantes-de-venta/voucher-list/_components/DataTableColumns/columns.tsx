@@ -82,7 +82,7 @@ export const columns = [
         docType={row.original.docType}
         correlative={row.original.correlative}
         serie={row.original.serie}
-        numeroDocumentoIdentidad={row.original.numeroDocumentoIdentidad}
+        numeroDocumentoIdentidad="10223161419"
       />
     ),
     header: "Acciones",
