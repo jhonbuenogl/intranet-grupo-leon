@@ -53,13 +53,13 @@ export const GET = async (
       `/public/vouchers/${docType}-${serie}-${correlative}.zip`
     );
 
-    const downloadPath = `/vouchers/${docType}-${serie}-${correlative}.zip`;
+    // const downloadPath = `/vouchers/${docType}-${serie}-${correlative}.zip`;
 
     fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
     console.log(`PDF Guardado en ${outputPath}`);
     return NextResponse.json(
-      { message: "XML obtenido correctamente", pdfURL: downloadPath },
+      { message: "XML obtenido correctamente", pdfURL: outputPath },
       { status: 200 }
     );
 

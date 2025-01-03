@@ -36,7 +36,7 @@ export const getVoucherPDFPath = async ({
 
   const pdfBase64 = response.data;
 
-  const pdfDirPath = path.join(process.cwd(), `/public/vouchers`);
+  const pdfDirPath = path.join(process.cwd(), `/public/vouchers/`);
 
   await fsp.rm(pdfDirPath, { recursive: true, force: true });
   await fsp.mkdir(pdfDirPath, { recursive: true });
@@ -46,11 +46,11 @@ export const getVoucherPDFPath = async ({
     `/public/vouchers/${docType}-${serie}-${correlative}.pdf`
   );
 
-  const downloadPath = `/vouchers/${docType}-${serie}-${correlative}.pdf`;
+  // const downloadPath = `/vouchers/${docType}-${serie}-${correlative}.pdf`;
 
   const filename = `${docType}-${serie}-${correlative}.pdf`;
 
   fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
-  return { outputPath: downloadPath, filename };
+  return { outputPath, filename };
 };
