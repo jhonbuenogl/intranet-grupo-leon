@@ -151,9 +151,15 @@ const DocumentObtainedTable = () => {
                         );
 
                         const ruta = response.data.pdfURL;
-                        console.log(`/vouchers/${ruta.split("/").pop()}`);
+                        console.log(
+                          `${
+                            process.env.NEXT_PUBLIC_NEXTAUTH_URL
+                          }/vouchers/${ruta.split("/").pop()}`
+                        );
                         const a = document.createElement("a");
-                        a.href = `/vouchers/${ruta.split("/").pop()}`;
+                        a.href = `${
+                          process.env.NEXT_PUBLIC_NEXTAUTH_URL
+                        }/vouchers/${ruta.split("/").pop()}`;
                         a.download = `${ruta.split("/").pop()}`;
                         document.body.appendChild(a);
                         a.click();
@@ -232,7 +238,7 @@ const DocumentObtainedTable = () => {
 
                         const ruta = response.data.pdfURL;
                         const a = document.createElement("a");
-                        a.href = `/vouchers/${ruta.split("/").pop()}`;
+                        a.href = ruta;
                         a.download = `${ruta.split("/").pop()}`;
                         document.body.appendChild(a);
                         a.click();
