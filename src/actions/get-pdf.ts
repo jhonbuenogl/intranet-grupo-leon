@@ -36,7 +36,7 @@ export const getVoucherPDFPath = async ({
 
   const pdfBase64 = response.data;
 
-  const pdfDirPath = path.join(process.cwd(), `/public/pdf/`);
+  const pdfDirPath = path.join(process.cwd(), `/public/pdf`);
 
   await fsp.rm(pdfDirPath, { recursive: true, force: true });
   await fsp.mkdir(pdfDirPath, { recursive: true });
