@@ -5,6 +5,14 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { User } from "lucide-react";
 import ColumnActions from "./ColumnActions/actions";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import JsonView from "@uiw/react-json-view";
 
 const columnHelper = createColumnHelper<Voucher>();
 
@@ -49,6 +57,23 @@ export const columns = [
     id: "Total",
     cell: (info) => <p>{info.getValue()}</p>,
     header: () => <p>Total</p>,
+  }),
+  columnHelper.accessor("close2u_json", {
+    id: "Json Close2u",
+    cell: (info) => (
+      <Dialog>
+        <DialogTrigger>Ver Json</DialogTrigger>
+        <DialogContent className="overflow-y-scroll max-h-[600px] min-w-[900px]">
+          <DialogHeader>
+            <DialogTitle>JSON para close2u</DialogTitle>
+
+            <div>
+              <JsonView className="" value={JSON.parse(info.getValue())} />
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    ),
   }),
   columnHelper.display({
     id: "Acciones",

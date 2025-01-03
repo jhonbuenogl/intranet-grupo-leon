@@ -489,3 +489,106 @@ export const makeNotaCreditoJSON = (voucher: any) => {
     },
   };
 };
+
+// Funciones útiles para manejar permisos y accesos de usuarios a la intranet
+
+export const updateRoutePermissionByPath = (
+  routes: RoutePermissionInterface[],
+  path: string,
+  checked: boolean
+): RoutePermissionInterface[] => {
+  return routes.map((route) => {
+    if (route.path === path) {
+      // Si el path coincide, actualiza el checked
+      return { ...route, checked };
+    }
+    if (route.children && route.children.length > 0) {
+      // Si tiene hijos, llama recursivamente
+      if (route.children.some((child) => child.checked === true)) {
+        return {
+          ...route,
+          children: updateRoutePermissionByPath(route.children, path, checked),
+        };
+      } else {
+        return {
+          ...route,
+          children: updateRoutePermissionByPath(route.children, path, checked),
+        };
+      }
+    }
+    return route;
+  });
+};
+
+export const updateRoutePermissionForAdmin = (
+  routes: RoutePermissionInterface[]
+): RoutePermissionInterface[] => {
+  return routes.map((route) => {
+    if (route.children && route.children.length > 0) {
+      // Llamada recursiva para los hijos
+      route.children = updateRoutePermissionForAdmin(route.children);
+      // Actualizar el checked en base a los hijos
+      route.checked = true;
+    } else if (route.children && route.children.length === 0 && !route.isLink) {
+      route.checked = route.isLink ? true : false;
+    } else if (route.children && route.children.length === 0 && route.isLink) {
+      route.checked = true;
+    }
+    return route;
+  });
+};
+export const updateRoutePermissionCheckedStatus = (
+  routes: RoutePermissionInterface[]
+): RoutePermissionInterface[] => {
+  return routes.map((route) => {
+    if (route.children && route.children.length > 0) {
+      // Llamada recursiva para los hijos
+      route.children = updateRoutePermissionCheckedStatus(route.children);
+      // Actualizar el checked en base a los hijos
+      route.checked = route.children.some((child) => child.checked);
+    } else if (route.children && route.children.length === 0 && !route.isLink) {
+      route.checked = route.isLink ? route.checked : false;
+    }
+
+    return route;
+  });
+};
+
+export interface RoutePermissionInterface {
+  id: string;
+  name: string;
+  path: string;
+  isLink: boolean;
+  checked: boolean;
+  icon: string;
+  hasParents: boolean;
+  children: RoutePermissionInterface[];
+}
+
+export const updateNewRoutePermissionsForUser = ({
+  newRoutePermissions,
+  routePermissions,
+}: {
+  newRoutePermissions: RoutePermissionInterface[];
+  routePermissions: RoutePermissionInterface[];
+}) => {
+  let newUpdatedRoutePermissions = newRoutePermissions;
+
+  routePermissions.map((route: RoutePermissionInterface) => {
+    if (route.children && route.children.length > 0) {
+      // Si tiene hijos, llama recursivamente
+      newUpdatedRoutePermissions = updateNewRoutePermissionsForUser({
+        newRoutePermissions: newUpdatedRoutePermissions,
+        routePermissions: route.children,
+      });
+    } else {
+      newUpdatedRoutePermissions = updateRoutePermissionByPath(
+        newUpdatedRoutePermissions,
+        route.path,
+        route.checked
+      );
+    }
+  });
+
+  return updateRoutePermissionCheckedStatus(newUpdatedRoutePermissions);
+};

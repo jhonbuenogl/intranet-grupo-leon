@@ -87,6 +87,13 @@ export const POST = async (req: NextRequest) => {
         moneda: voucher[0].monedaDatosDoc,
         montoTotal: voucher[0].monto ? voucher[0].monto : "240.00",
         createdBy: session.user?.name as string,
+        close2u_json: JSON.stringify(
+          docType === "01"
+            ? makeFacturaJSON(voucher)
+            : docType === "03"
+            ? makeBoletaJSON(voucher)
+            : makeNotaCreditoJSON(voucher)
+        ),
       },
     });
 

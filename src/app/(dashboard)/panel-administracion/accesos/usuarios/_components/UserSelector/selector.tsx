@@ -24,6 +24,7 @@ const UserSelector = ({ users, selectedUser }: Props) => {
       value={selectedUser ? selectedUser.id : undefined}
       onValueChange={(e) => {
         router.push(`/panel-administracion/accesos/usuarios?uid=${e}`);
+        router.refresh();
       }}
     >
       <SelectTrigger className="w-full max-w-[300px]">
