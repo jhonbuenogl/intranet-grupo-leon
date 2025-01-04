@@ -52,5 +52,5 @@ export const getVoucherPDFPath = async ({
 
   fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
-  return { outputPath, filename };
+  return { outputPath, filename, pdfBase64 };
 };

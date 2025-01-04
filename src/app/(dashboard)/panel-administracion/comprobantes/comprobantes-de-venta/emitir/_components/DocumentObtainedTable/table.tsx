@@ -150,20 +150,43 @@ const DocumentObtainedTable = () => {
                           }/10223161419`
                         );
 
-                        const ruta = response.data.pdfURL;
-                        console.log(
-                          `${
-                            process.env.NEXT_PUBLIC_NEXTAUTH_URL
-                          }/vouchers/${ruta.split("/").pop()}`
-                        );
+                        // const ruta = response.data.pdfURL;
+                        // console.log(
+                        //   `${
+                        //     process.env.NEXT_PUBLIC_NEXTAUTH_URL
+                        //   }/vouchers/${ruta.split("/").pop()}`
+                        // );
+                        // const a = document.createElement("a");
+                        // a.href = `${
+                        //   process.env.NEXT_PUBLIC_NEXTAUTH_URL
+                        // }/vouchers/${ruta.split("/").pop()}`;
+                        // a.download = `${ruta.split("/").pop()}`;
+                        // document.body.appendChild(a);
+                        // a.click();
+                        // a.remove();
+
+                        const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
+                        const ab = new ArrayBuffer(byteString.length);
+                        const ia = new Uint8Array(ab);
+
+                        for (let i = 0; i < byteString.length; i++) {
+                          ia[i] = byteString.charCodeAt(i);
+                        }
+
+                        const blob = new Blob([ab], {
+                          type: "application/pdf",
+                        });
+
+                        // Crear un enlace de descarga temporal
                         const a = document.createElement("a");
-                        a.href = `${
-                          process.env.NEXT_PUBLIC_NEXTAUTH_URL
-                        }/vouchers/${ruta.split("/").pop()}`;
-                        a.download = `${ruta.split("/").pop()}`;
+                        const url = URL.createObjectURL(blob);
+                        a.href = url;
+                        a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
                         document.body.appendChild(a);
                         a.click();
                         a.remove();
+
+                        URL.revokeObjectURL(url);
 
                         toast({
                           title: "PDF Obtenido correctamente",

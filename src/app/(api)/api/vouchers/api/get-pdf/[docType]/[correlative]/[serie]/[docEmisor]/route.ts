@@ -27,7 +27,12 @@ export const GET = async (
 
     console.log(`PDF Guardado en ${response.outputPath}`);
     return NextResponse.json(
-      { message: "PDF obtenido correctamente", pdfURL: response.outputPath },
+      {
+        message: "PDF obtenido correctamente",
+        pdfURL: response.outputPath,
+        pdfBase64: response.pdfBase64,
+        filename: response.filename,
+      },
       { status: 200 }
     );
   } catch (error) {
