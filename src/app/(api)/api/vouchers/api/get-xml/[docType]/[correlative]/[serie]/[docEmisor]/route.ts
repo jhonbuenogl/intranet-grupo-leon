@@ -39,7 +39,6 @@ export const GET = async (
     const response = await axios.put(`${baseUrl}/consultarXml`, requestBody, {
       headers,
     });
-    console.log(process.cwd());
 
     const pdfBase64 = response.data.xmlFirma;
 
