@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import fsp from "fs/promises";
 import path from "path";
+import {
+  voucherQueryHeadersDevelopment,
+  voucherQueryHeadersProduction,
+} from "@/lib/utils";
 
 export const GET = async (
   req: NextRequest,
@@ -29,15 +33,11 @@ export const GET = async (
       tipoComprobante: docType,
     };
 
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: "Basic VWFwaUBmYXN0bGFuZ5wZTpMYXV0bzI2MTAk",
-      "X-Auth-Token":
-        "p5Hp14nCxoiYTQCMmN2rfnbn8iraY8rEotiPsPrkhFrIJxH8aX+6cJilmD1YK64B",
-    };
-
     const response = await axios.put(`${baseUrl}/consultarXml`, requestBody, {
-      headers,
+      headers:
+        process.env.NODE_ENV === "development"
+          ? voucherQueryHeadersDevelopment
+          : voucherQueryHeadersProduction,
     });
 
     const pdfBase64 = response.data.xmlFirma;

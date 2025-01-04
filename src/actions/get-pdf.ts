@@ -1,3 +1,7 @@
+import {
+  voucherQueryHeadersDevelopment,
+  voucherQueryHeadersProduction,
+} from "@/lib/utils";
 import axios from "axios";
 import fs from "fs";
 import fsp from "fs/promises";
@@ -23,15 +27,11 @@ export const getVoucherPDFPath = async ({
     tipoComprobante: docType,
   };
 
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: "Basic VWFwaUBmYXN0bGFuZ5wZTpMYXV0bzI2MTAk",
-    "X-Auth-Token":
-      "p5Hp14nCxoiYTQCMmN2rfnbn8iraY8rEotiPsPrkhFrIJxH8aX+6cJilmD1YK64B",
-  };
-
   const response = await axios.put(`${baseUrl}/consultarPdf`, requestBody, {
-    headers,
+    headers:
+      process.env.NODE_ENV === "development"
+        ? voucherQueryHeadersDevelopment
+        : voucherQueryHeadersProduction,
   });
 
   const pdfBase64 = response.data;

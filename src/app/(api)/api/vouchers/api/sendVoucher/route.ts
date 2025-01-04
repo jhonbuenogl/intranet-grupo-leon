@@ -3,6 +3,8 @@ import {
   makeBoletaJSON,
   makeFacturaJSON,
   makeNotaCreditoJSON,
+  voucherQueryHeadersDevelopment,
+  voucherQueryHeadersProduction,
 } from "@/lib/utils";
 import axios from "axios";
 import { getServerSession } from "next-auth";
@@ -25,20 +27,16 @@ export const POST = async (req: NextRequest) => {
   }
 
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: "Basic VWFwaUBmYXN0bGFuZ5wZTpMYXV0bzI2MTAk",
-      "X-Auth-Token":
-        "p5Hp14nCxoiYTQCMmN2rfnbn8iraY8rEotiPsPrkhFrIJxH8aX+6cJilmD1YK64B",
-    };
-
     if (docType === "01") {
       console.log("es factura");
       await axios.put(
         "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/factura",
         makeFacturaJSON(voucher),
         {
-          headers,
+          headers:
+            process.env.NODE_ENV === "development"
+              ? voucherQueryHeadersDevelopment
+              : voucherQueryHeadersProduction,
         }
       );
     } else if (docType === "03") {
@@ -47,7 +45,10 @@ export const POST = async (req: NextRequest) => {
         "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/boleta",
         makeBoletaJSON(voucher),
         {
-          headers,
+          headers:
+            process.env.NODE_ENV === "development"
+              ? voucherQueryHeadersDevelopment
+              : voucherQueryHeadersProduction,
         }
       );
     } else if (docType === "07") {
@@ -56,7 +57,10 @@ export const POST = async (req: NextRequest) => {
         "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/nota-credito",
         makeNotaCreditoJSON(voucher),
         {
-          headers,
+          headers:
+            process.env.NODE_ENV === "development"
+              ? voucherQueryHeadersDevelopment
+              : voucherQueryHeadersProduction,
         }
       );
     }

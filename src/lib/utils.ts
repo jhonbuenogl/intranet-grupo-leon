@@ -594,3 +594,15 @@ export const updateNewRoutePermissionsForUser = ({
 
   return updateRoutePermissionCheckedStatus(newUpdatedRoutePermissions);
 };
+
+export const voucherQueryHeadersDevelopment = {
+  "Content-Type": "application/json",
+  Authorization: "Basic VWFwaUBmYXN0bGFuZ5wZTpMYXV0bzI2MTAk",
+  "X-Auth-Token":
+    "p5Hp14nCxoiYTQCMmN2rfnbn8iraY8rEotiPsPrkhFrIJxH8aX+6cJilmD1YK64B",
+};
+export const voucherQueryHeadersProduction = {
+  "Content-Type": "application/json",
+  Authorization: "Basic QzJVYXV0b0BjbG9zZTJ1LnBlOkMyVWF1dG8yJCQ=",
+  "X-Auth-Token": "MjAxNDQ2NDAyNjk=",
+};
