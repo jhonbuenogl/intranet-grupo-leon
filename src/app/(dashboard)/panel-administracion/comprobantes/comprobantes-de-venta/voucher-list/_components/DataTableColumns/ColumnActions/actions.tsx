@@ -59,7 +59,7 @@ const ColumnActions = ({
                 const a = document.createElement("a");
                 const url = URL.createObjectURL(blob);
                 a.href = url;
-                a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
+                a.download = response.data.filename; // Nombre del archivo
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
@@ -162,7 +162,7 @@ const ColumnActions = ({
               <Tooltip>
                 <TooltipTrigger>
                   <Image
-                    className="w-6 h-6"
+                    className="w-6 h-6 min-w-6 min-h-6"
                     src={`/icons/pdf.svg`}
                     height={80}
                     width={80}

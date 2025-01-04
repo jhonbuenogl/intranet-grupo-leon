@@ -196,7 +196,7 @@ const DocumentObtainedTable = () => {
                       <Tooltip>
                         <TooltipTrigger>
                           <Image
-                            className="w-6 h-6"
+                            className="w-6 h-6 min-w-6 min-h-6"
                             src={`/icons/pdf.svg`}
                             height={80}
                             width={80}

@@ -54,7 +54,7 @@ export const GET = async (
 
     // const downloadPath = `/vouchers/${docType}-${serie}-${correlative}.zip`;
 
-    const filename = `${docType}-${serie}-${correlative}.pdf`;
+    const filename = `${docType}-${serie}-${correlative}.zip`;
 
     fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
