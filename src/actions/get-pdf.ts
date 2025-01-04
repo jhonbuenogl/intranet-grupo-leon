@@ -43,7 +43,7 @@ export const getVoucherPDFPath = async ({
 
   const outputPath = path.join(
     process.cwd(),
-    `/public/pdf/${docType}-${serie}-${correlative}.pdf`
+    `/public/vouchers/${docType}-${serie}-${correlative}.pdf`
   );
 
   const filename = `${docType}-${serie}-${correlative}.pdf`;

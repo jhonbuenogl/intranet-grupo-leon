@@ -5,6 +5,8 @@ import {
   voucherQueryHeadersDevelopment,
   voucherQueryHeadersProduction,
 } from "@/lib/utils";
+import fs from "fs";
+import fsp from "fs/promises";
 
 export const GET = async (
   req: NextRequest,
@@ -40,10 +42,17 @@ export const GET = async (
 
     const pdfBase64 = response.data.xmlFirma;
 
+    const pdfDirPath = path.join(process.cwd(), `/public/vouchers/`);
+
+    await fsp.rm(pdfDirPath, { recursive: true, force: true });
+    await fsp.mkdir(pdfDirPath, { recursive: true });
+
     const outputPath = path.join(
       process.cwd(),
       `/public/vouchers/${docType}-${serie}-${correlative}.zip`
     );
+
+    fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
     const filename = `${docType}-${serie}-${correlative}.zip`;
 
