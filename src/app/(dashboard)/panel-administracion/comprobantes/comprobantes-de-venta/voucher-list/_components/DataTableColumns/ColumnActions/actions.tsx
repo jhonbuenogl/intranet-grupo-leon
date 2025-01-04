@@ -43,13 +43,28 @@ const ColumnActions = ({
                   `/api/vouchers/api/get-xml/${docType}/${correlative}/${serie}/${numeroDocumentoIdentidad}`
                 );
 
-                const ruta = response.data.pdfURL;
+                const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
+                const ab = new ArrayBuffer(byteString.length);
+                const ia = new Uint8Array(ab);
+
+                for (let i = 0; i < byteString.length; i++) {
+                  ia[i] = byteString.charCodeAt(i);
+                }
+
+                const blob = new Blob([ab], {
+                  type: "application/pdf",
+                });
+
+                // Crear un enlace de descarga temporal
                 const a = document.createElement("a");
-                a.href = `/vouchers/${ruta.split("/").pop()}`;
-                a.download = `${ruta.split("/").pop()}`;
+                const url = URL.createObjectURL(blob);
+                a.href = url;
+                a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
+
+                URL.revokeObjectURL(url);
 
                 toast({
                   title: "XML Obtenido correctamente",
@@ -101,13 +116,28 @@ const ColumnActions = ({
                   `/api/vouchers/api/get-pdf/${docType}/${correlative}/${serie}/${numeroDocumentoIdentidad}`
                 );
 
-                const ruta = response.data.pdfURL;
+                const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
+                const ab = new ArrayBuffer(byteString.length);
+                const ia = new Uint8Array(ab);
+
+                for (let i = 0; i < byteString.length; i++) {
+                  ia[i] = byteString.charCodeAt(i);
+                }
+
+                const blob = new Blob([ab], {
+                  type: "application/pdf",
+                });
+
+                // Crear un enlace de descarga temporal
                 const a = document.createElement("a");
-                a.href = `/vouchers/${ruta.split("/").pop()}`;
-                a.download = `${ruta.split("/").pop()}`;
+                const url = URL.createObjectURL(blob);
+                a.href = url;
+                a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
+
+                URL.revokeObjectURL(url);
 
                 toast({
                   title: "PDF Obtenido correctamente",

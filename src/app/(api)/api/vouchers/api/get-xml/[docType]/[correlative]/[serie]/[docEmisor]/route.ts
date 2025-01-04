@@ -55,32 +55,20 @@ export const GET = async (
 
     // const downloadPath = `/vouchers/${docType}-${serie}-${correlative}.zip`;
 
+    const filename = `${docType}-${serie}-${correlative}.pdf`;
+
     fs.writeFileSync(outputPath, Buffer.from(pdfBase64, "base64"));
 
     console.log(`PDF Guardado en ${outputPath}`);
     return NextResponse.json(
-      { message: "XML obtenido correctamente", pdfURL: outputPath },
+      {
+        message: "XML obtenido correctamente",
+        outputPath,
+        filename,
+        pdfBase64,
+      },
       { status: 200 }
     );
-
-    // const response = await axios.put(
-    //   `${baseUrl}/consultarEstado`,
-    //   requestBody,
-    //   { headers }
-    // );
-
-    // console.log(response.data);
-
-    // if (response.data.estadoSunat.valor === "Aceptado") {
-
-    // } else {
-    //   return NextResponse.json(
-    //     {
-    //       error: "El comprobante aún no ha sido entregado...",
-    //     },
-    //     { status: 400 }
-    //   );
-    // }
   } catch (error) {
     console.log(error);
     if (axios.isAxiosError(error)) {
