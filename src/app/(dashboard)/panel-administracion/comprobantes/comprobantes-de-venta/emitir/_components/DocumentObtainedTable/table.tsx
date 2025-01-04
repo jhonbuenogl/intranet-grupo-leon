@@ -35,7 +35,6 @@ const DocumentObtainedTable = () => {
           <TableHead>Documento</TableHead>
           <TableHead>Cliente</TableHead>
           <TableHead>Moneda</TableHead>
-          <TableHead>Total Sin IGV</TableHead>
           <TableHead>Total</TableHead>
           <TableHead>Acciones</TableHead>
         </TableRow>
@@ -49,10 +48,9 @@ const DocumentObtainedTable = () => {
               "dd-MM-yyyy"
             )}
           </TableCell>
-          <TableCell>{`${voucherStore.voucher[0].tipoDocumentoIdentidad}-${voucherStore.voucher[0].numeroDocumentoIdentidad}`}</TableCell>
+          <TableCell>{`${voucherStore.voucher[0].tipoDocumentoIdentidadReceptor}-${voucherStore.voucher[0].numeroDocumentoIdentidadReceptor}`}</TableCell>
           <TableCell>{voucherStore.voucher[0].nombreLegalReceptor}</TableCell>
           <TableCell>{voucherStore.voucher[0].monedaDatosDoc}</TableCell>
-          <TableCell>240.00</TableCell>
           <TableCell>{voucherStore.voucher[0].monto}</TableCell>
           <TableCell suppressHydrationWarning>
             <div className="flex gap-4  items-center">
@@ -130,16 +128,6 @@ const DocumentObtainedTable = () => {
                       try {
                         setGettingPDF(true);
 
-                        // const response = await axios.get(
-                        //   `/api/vouchers/api/get-pdf/${
-                        //     voucherStore.voucher[0].tipoPlantilla
-                        //   }/${`${parseInt(
-                        //     voucherStore.voucher[0].numeroDatosDoc
-                        //   )}`.padStart(7, "0")}/${
-                        //     voucherStore.voucher[0].serie
-                        //   }/${voucherStore.voucher[0].numeroDocumentoIdentidad}`
-                        // );
-
                         const response = await axios.get(
                           `/api/vouchers/api/get-pdf/${
                             voucherStore.voucher[0].tipoPlantilla
@@ -147,7 +135,11 @@ const DocumentObtainedTable = () => {
                             voucherStore.voucher[0].numeroDatosDoc
                           )}`.padStart(7, "0")}/${
                             voucherStore.voucher[0].serie
-                          }/10223161419`
+                          }/${
+                            process.env.NODE_ENV === "development"
+                              ? "10223161419"
+                              : voucherStore.voucher[0].numeroDocumentoIdentidad
+                          }`
                         );
 
                         const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
@@ -225,15 +217,6 @@ const DocumentObtainedTable = () => {
                       try {
                         setGettingXML(true);
 
-                        // const response = await axios.get(
-                        //   `/api/vouchers/api/get-pdf/${
-                        //     voucherStore.voucher[0].tipoPlantilla
-                        //   }/${`${parseInt(
-                        //     voucherStore.voucher[0].numeroDatosDoc
-                        //   )}`.padStart(7, "0")}/${
-                        //     voucherStore.voucher[0].serie
-                        //   }/${voucherStore.voucher[0].numeroDocumentoIdentidad}`
-                        // );
                         const response = await axios.get(
                           `/api/vouchers/api/get-xml/${
                             voucherStore.voucher[0].tipoPlantilla
@@ -241,7 +224,11 @@ const DocumentObtainedTable = () => {
                             voucherStore.voucher[0].numeroDatosDoc
                           )}`.padStart(7, "0")}/${
                             voucherStore.voucher[0].serie
-                          }/10223161419`
+                          }/${
+                            process.env.NODE_ENV === "development"
+                              ? "10223161419"
+                              : voucherStore.voucher[0].numeroDocumentoIdentidad
+                          }`
                         );
 
                         const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."

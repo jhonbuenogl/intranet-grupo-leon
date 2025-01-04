@@ -1,10 +1,17 @@
 import prisma from "@/db/db";
-import { updateRoutePermissionCheckedStatus } from "@/lib/utils";
+import {
+  routePermissionStatusForAccessRouteIsTrue,
+  updateRoutePermissionCheckedStatus,
+} from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
     const { userRoutePermissions, userId } = await req.json();
+
+    console.log(
+      routePermissionStatusForAccessRouteIsTrue(userRoutePermissions)
+    );
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
 
@@ -15,6 +22,9 @@ export const POST = async (req: NextRequest) => {
         },
         { status: 400 }
       );
+    } else {
+      if (routePermissionStatusForAccessRouteIsTrue(userRoutePermissions)) {
+      }
     }
 
     await prisma.user.update({

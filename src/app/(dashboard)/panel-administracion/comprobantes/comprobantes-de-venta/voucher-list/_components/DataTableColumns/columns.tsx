@@ -82,7 +82,11 @@ export const columns = [
         docType={row.original.docType}
         correlative={row.original.correlative}
         serie={row.original.serie}
-        numeroDocumentoIdentidad="10223161419"
+        numeroDocumentoIdentidad={
+          process.env.NODE_ENV === "development"
+            ? "10223161419"
+            : row.original.numeroDocumentoIdentidad
+        }
       />
     ),
     header: "Acciones",

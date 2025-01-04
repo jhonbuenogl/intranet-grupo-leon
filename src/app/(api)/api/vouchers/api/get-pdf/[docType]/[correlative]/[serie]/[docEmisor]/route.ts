@@ -25,7 +25,6 @@ export const GET = async (
       correlative,
     });
 
-    console.log(`PDF Guardado en ${response.outputPath}`);
     return NextResponse.json(
       {
         message: "PDF obtenido correctamente",

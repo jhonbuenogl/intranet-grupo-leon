@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IntranetRoutes from "../IntranetRoutes/intranetRoutes";
 import { User } from "@prisma/client";
 import { RoutePermissionInterface } from "@/lib/utils";
@@ -14,6 +14,12 @@ const IntranetRoutesContainer = ({ user }: Props) => {
   const [userRoutePermissions, setUserRoutePermissions] = useState<
     RoutePermissionInterface[]
   >(user?.routePermissions ? JSON.parse(user?.routePermissions) : []);
+
+  useEffect(() => {
+    setUserRoutePermissions(
+      user?.routePermissions ? JSON.parse(user.routePermissions) : []
+    );
+  }, [user]);
 
   return (
     <>

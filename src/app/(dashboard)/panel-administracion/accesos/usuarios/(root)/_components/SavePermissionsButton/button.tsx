@@ -6,6 +6,7 @@ import { RoutePermissionInterface } from "@/lib/utils";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const SavePermissionsButton = ({ userRoutePermissions, user }: Props) => {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
@@ -41,6 +43,8 @@ const SavePermissionsButton = ({ userRoutePermissions, user }: Props) => {
                   title: response.data.message,
                   description: new Date().toLocaleString(),
                 });
+
+                router.refresh();
               } catch (error) {
                 console.log(error);
                 if (axios.isAxiosError(error)) {

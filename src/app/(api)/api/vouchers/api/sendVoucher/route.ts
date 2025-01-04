@@ -76,7 +76,10 @@ export const POST = async (req: NextRequest) => {
       docType,
       correlative: voucher[0].numeroDatosDoc,
       serie: voucher[0].serie,
-      docEmisor: "10223161419",
+      docEmisor:
+        process.env.NODE_ENV === "development"
+          ? "10223161419"
+          : voucher[0].numeroDocumentoIdentidad,
     });
 
     await prisma.voucher.create({

@@ -16,7 +16,9 @@ const IntranetRoutesContainer = ({ user }: Props) => {
   >(user?.routePermissions ? JSON.parse(user.routePermissions) : []);
 
   useEffect(() => {
-    setUserRoutePermissions(JSON.parse(user?.routePermissions as string));
+    setUserRoutePermissions(
+      user?.routePermissions ? JSON.parse(user.routePermissions) : []
+    );
   }, [user]);
 
   return (
