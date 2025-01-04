@@ -4,6 +4,8 @@ import {
 } from "@/lib/utils";
 import axios from "axios";
 import path from "path";
+import fs from "fs";
+import fsp from "fs/promises";
 
 export const getVoucherPDFPath = async ({
   docType,
@@ -34,7 +36,7 @@ export const getVoucherPDFPath = async ({
 
   const pdfBase64 = response.data;
 
-  const pdfDirPath = path.join(process.cwd(), `/public/pdf/`);
+  const pdfDirPath = path.join(process.cwd(), `/public/vouchers/`);
 
   await fsp.rm(pdfDirPath, { recursive: true, force: true });
   await fsp.mkdir(pdfDirPath, { recursive: true });
