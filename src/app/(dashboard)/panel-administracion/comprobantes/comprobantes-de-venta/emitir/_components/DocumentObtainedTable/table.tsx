@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -27,270 +29,274 @@ const DocumentObtainedTable = () => {
   const [gettingXML, setGettingXML] = React.useState(false);
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Número</TableHead>
-          <TableHead>Fecha Emisión</TableHead>
-          <TableHead>Documento</TableHead>
-          <TableHead>Cliente</TableHead>
-          <TableHead>Moneda</TableHead>
-          <TableHead>Total</TableHead>
-          <TableHead>Acciones</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">{`${voucherStore.voucher[0].tipoPlantilla}-${voucherStore.voucher[0].serie}-${voucherStore.voucher[0].numeroDatosDoc}`}</TableCell>
-          <TableCell>
-            {format(
-              new Date(voucherStore.voucher[0].fechaEmision),
-              "dd-MM-yyyy"
-            )}
-          </TableCell>
-          <TableCell>{`${voucherStore.voucher[0].tipoDocumentoIdentidadReceptor}-${voucherStore.voucher[0].numeroDocumentoIdentidadReceptor}`}</TableCell>
-          <TableCell>{voucherStore.voucher[0].nombreLegalReceptor}</TableCell>
-          <TableCell>{voucherStore.voucher[0].monedaDatosDoc}</TableCell>
-          <TableCell>{voucherStore.voucher[0].monto}</TableCell>
-          <TableCell suppressHydrationWarning>
-            <div className="flex gap-4  items-center">
-              <AlertDialogForm
-                submitButtonLoadingText="Enviando..."
-                submitButtonText="Si, enviar"
-                title="Quieres enviar este documento al PSE?"
-                text="Esta acción enviará el documento para ser procesado por el PSE y
+    <>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Número</TableHead>
+            <TableHead>Fecha Emisión</TableHead>
+            <TableHead>Documento</TableHead>
+            <TableHead>Cliente</TableHead>
+            <TableHead>Moneda</TableHead>
+            <TableHead>Total</TableHead>
+            <TableHead>Acciones</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell className="font-medium">{`${voucherStore.voucher[0].tipoPlantilla}-${voucherStore.voucher[0].serie}-${voucherStore.voucher[0].numeroDatosDoc}`}</TableCell>
+            <TableCell>
+              {format(
+                new Date(voucherStore.voucher[0].fechaEmision),
+                "dd-MM-yyyy"
+              )}
+            </TableCell>
+            <TableCell>{`${voucherStore.voucher[0].tipoDocumentoIdentidadReceptor}-${voucherStore.voucher[0].numeroDocumentoIdentidadReceptor}`}</TableCell>
+            <TableCell>{voucherStore.voucher[0].nombreLegalReceptor}</TableCell>
+            <TableCell>{voucherStore.voucher[0].monedaDatosDoc}</TableCell>
+            <TableCell>{voucherStore.voucher[0].monto}</TableCell>
+            <TableCell suppressHydrationWarning>
+              <div className="flex gap-4  items-center">
+                <AlertDialogForm
+                  submitButtonLoadingText="Enviando..."
+                  submitButtonText="Si, enviar"
+                  title="Quieres enviar este documento al PSE?"
+                  text="Esta acción enviará el documento para ser procesado por el PSE y
               luego podrás descargar su PDF"
-                onSubmit={async () => {
-                  try {
-                    const response = await axios.post(
-                      "/api/vouchers/api/sendVoucher",
-                      {
-                        voucher: [
-                          ...voucherStore.voucher.map((item: any) => ({
-                            ...item,
-                            numeroDatosDoc: `${parseInt(
-                              voucherStore.voucher[0].numeroDatosDoc
-                            )}`.padStart(7, "0"),
-                          })),
-                        ],
-                        docType: voucherStore.voucher[0].docType,
-                      }
-                    );
+                  onSubmit={async () => {
+                    try {
+                      const response = await axios.post(
+                        "/api/vouchers/api/sendVoucher",
+                        {
+                          voucher: [
+                            ...voucherStore.voucher.map((item: any) => ({
+                              ...item,
+                              numeroDatosDoc: `${parseInt(
+                                voucherStore.voucher[0].numeroDatosDoc
+                              )}`.padStart(7, "0"),
+                            })),
+                          ],
+                          docType: voucherStore.voucher[0].docType,
+                        }
+                      );
 
-                    toast({
-                      title: response.data.message,
-                      description: new Date().toLocaleString(),
-                    });
-                  } catch (error) {
-                    console.log(error);
-                    if (axios.isAxiosError(error)) {
-                      if (error.response?.data.error) {
-                        toast({
-                          title: error.response.data.error,
-                          description: new Date().toLocaleString(),
-                          variant: "destructive",
-                        });
-                      } else {
-                        toast({
-                          title: "Error interno del servidor",
-                          description:
-                            "Inténtelo de nuevo o inténtelo más tarde",
-                          variant: "destructive",
-                        });
+                      toast({
+                        title: response.data.message,
+                        description: new Date().toLocaleString(),
+                      });
+                    } catch (error) {
+                      console.log(error);
+                      if (axios.isAxiosError(error)) {
+                        if (error.response?.data.error) {
+                          toast({
+                            title: error.response.data.error,
+                            description: new Date().toLocaleString(),
+                            variant: "destructive",
+                          });
+                        } else {
+                          toast({
+                            title: "Error interno del servidor",
+                            description:
+                              "Inténtelo de nuevo o inténtelo más tarde",
+                            variant: "destructive",
+                          });
+                        }
                       }
                     }
-                  }
-                }}
-              >
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Send className="text-green-600" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Enviar documento</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </AlertDialogForm>
+                  }}
+                >
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Send className="text-green-600" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Enviar documento</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </AlertDialogForm>
 
-              {gettingPDF ? (
-                <>
-                  <LoaderCircle
-                    className="w-4 h-4 animate-spin"
-                    strokeWidth={1}
-                  />
-                </>
-              ) : (
-                <>
-                  <div
-                    onClick={async () => {
-                      try {
-                        setGettingPDF(true);
+                {gettingPDF ? (
+                  <>
+                    <LoaderCircle
+                      className="w-4 h-4 animate-spin"
+                      strokeWidth={1}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <div
+                      onClick={async () => {
+                        try {
+                          setGettingPDF(true);
 
-                        const response = await axios.get(
-                          `/api/vouchers/api/get-pdf/${
-                            voucherStore.voucher[0].tipoPlantilla
-                          }/${`${parseInt(
-                            voucherStore.voucher[0].numeroDatosDoc
-                          )}`.padStart(7, "0")}/${
-                            voucherStore.voucher[0].serie
-                          }/${
-                            process.env.NODE_ENV === "development"
-                              ? "10223161419"
-                              : voucherStore.voucher[0].numeroDocumentoIdentidad
-                          }`
-                        );
+                          const response = await axios.get(
+                            `/api/vouchers/api/get-pdf/${
+                              voucherStore.voucher[0].docType
+                            }/${`${parseInt(
+                              voucherStore.voucher[0].numeroDatosDoc
+                            )}`.padStart(7, "0")}/${
+                              voucherStore.voucher[0].serie
+                            }/${
+                              process.env.NODE_ENV === "development"
+                                ? "10223161419"
+                                : voucherStore.voucher[0]
+                                    .numeroDocumentoIdentidad
+                            }`
+                          );
 
-                        const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
-                        const ab = new ArrayBuffer(byteString.length);
-                        const ia = new Uint8Array(ab);
+                          const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
+                          const ab = new ArrayBuffer(byteString.length);
+                          const ia = new Uint8Array(ab);
 
-                        for (let i = 0; i < byteString.length; i++) {
-                          ia[i] = byteString.charCodeAt(i);
-                        }
+                          for (let i = 0; i < byteString.length; i++) {
+                            ia[i] = byteString.charCodeAt(i);
+                          }
 
-                        const blob = new Blob([ab], {
-                          type: "application/pdf",
-                        });
+                          const blob = new Blob([ab], {
+                            type: "application/pdf",
+                          });
 
-                        // Crear un enlace de descarga temporal
-                        const a = document.createElement("a");
-                        const url = URL.createObjectURL(blob);
-                        a.href = url;
-                        a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
+                          // Crear un enlace de descarga temporal
+                          const a = document.createElement("a");
+                          const url = URL.createObjectURL(blob);
+                          a.href = url;
+                          a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
+                          document.body.appendChild(a);
+                          a.click();
+                          a.remove();
 
-                        URL.revokeObjectURL(url);
+                          URL.revokeObjectURL(url);
 
-                        toast({
-                          title: "PDF Obtenido correctamente",
-                          description: new Date().toLocaleString(),
-                        });
-                      } catch (error) {
-                        if (axios.isAxiosError(error)) {
-                          if (error.response?.data.error) {
-                            toast({
-                              title: error.response.data.error,
-                              description: new Date().toLocaleString(),
-                              variant: "destructive",
-                            });
+                          toast({
+                            title: "PDF Obtenido correctamente",
+                            description: new Date().toLocaleString(),
+                          });
+                        } catch (error) {
+                          if (axios.isAxiosError(error)) {
+                            if (error.response?.data.error) {
+                              toast({
+                                title: error.response.data.error,
+                                description: new Date().toLocaleString(),
+                                variant: "destructive",
+                              });
+                            }
                           }
                         }
-                      }
 
-                      setGettingPDF(false);
-                    }}
-                  >
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Image
-                            className="w-6 h-6 min-w-6 min-h-6"
-                            src={`/icons/pdf.svg`}
-                            height={80}
-                            width={80}
-                            alt="Icono de PDF"
-                          />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Descargar PDF</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                </>
-              )}
-              {gettingXML ? (
-                <>
-                  <LoaderCircle
-                    className="w-4 h-4 animate-spin"
-                    strokeWidth={1}
-                  />
-                </>
-              ) : (
-                <>
-                  <div
-                    onClick={async () => {
-                      try {
-                        setGettingXML(true);
+                        setGettingPDF(false);
+                      }}
+                    >
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Image
+                              className="w-6 h-6 min-w-6 min-h-6"
+                              src={`/icons/pdf.svg`}
+                              height={80}
+                              width={80}
+                              alt="Icono de PDF"
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Descargar PDF</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                  </>
+                )}
+                {gettingXML ? (
+                  <>
+                    <LoaderCircle
+                      className="w-4 h-4 animate-spin"
+                      strokeWidth={1}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <div
+                      onClick={async () => {
+                        try {
+                          setGettingXML(true);
 
-                        const response = await axios.get(
-                          `/api/vouchers/api/get-xml/${
-                            voucherStore.voucher[0].tipoPlantilla
-                          }/${`${parseInt(
-                            voucherStore.voucher[0].numeroDatosDoc
-                          )}`.padStart(7, "0")}/${
-                            voucherStore.voucher[0].serie
-                          }/${
-                            process.env.NODE_ENV === "development"
-                              ? "10223161419"
-                              : voucherStore.voucher[0].numeroDocumentoIdentidad
-                          }`
-                        );
+                          const response = await axios.get(
+                            `/api/vouchers/api/get-xml/${
+                              voucherStore.voucher[0].docType
+                            }/${`${parseInt(
+                              voucherStore.voucher[0].numeroDatosDoc
+                            )}`.padStart(7, "0")}/${
+                              voucherStore.voucher[0].serie
+                            }/${
+                              process.env.NODE_ENV === "development"
+                                ? "10223161419"
+                                : voucherStore.voucher[0]
+                                    .numeroDocumentoIdentidad
+                            }`
+                          );
 
-                        const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
-                        const ab = new ArrayBuffer(byteString.length);
-                        const ia = new Uint8Array(ab);
+                          const byteString = atob(response.data.pdfBase64); // Eliminar el prefijo "data:..."
+                          const ab = new ArrayBuffer(byteString.length);
+                          const ia = new Uint8Array(ab);
 
-                        for (let i = 0; i < byteString.length; i++) {
-                          ia[i] = byteString.charCodeAt(i);
-                        }
+                          for (let i = 0; i < byteString.length; i++) {
+                            ia[i] = byteString.charCodeAt(i);
+                          }
 
-                        const blob = new Blob([ab], {
-                          type: "application/pdf",
-                        });
+                          const blob = new Blob([ab], {
+                            type: "application/pdf",
+                          });
 
-                        // Crear un enlace de descarga temporal
-                        const a = document.createElement("a");
-                        const url = URL.createObjectURL(blob);
-                        a.href = url;
-                        a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
+                          // Crear un enlace de descarga temporal
+                          const a = document.createElement("a");
+                          const url = URL.createObjectURL(blob);
+                          a.href = url;
+                          a.download = response.data.filename || "archivo.pdf"; // Nombre del archivo
+                          document.body.appendChild(a);
+                          a.click();
+                          a.remove();
 
-                        URL.revokeObjectURL(url);
+                          URL.revokeObjectURL(url);
 
-                        toast({
-                          title: "XML Obtenido correctamente",
-                          description: new Date().toLocaleString(),
-                        });
-                      } catch (error) {
-                        if (axios.isAxiosError(error)) {
-                          if (error.response?.data.error) {
-                            toast({
-                              title: error.response.data.error,
-                              description: new Date().toLocaleString(),
-                              variant: "destructive",
-                            });
+                          toast({
+                            title: "XML Obtenido correctamente",
+                            description: new Date().toLocaleString(),
+                          });
+                        } catch (error) {
+                          if (axios.isAxiosError(error)) {
+                            if (error.response?.data.error) {
+                              toast({
+                                title: error.response.data.error,
+                                description: new Date().toLocaleString(),
+                                variant: "destructive",
+                              });
+                            }
                           }
                         }
-                      }
 
-                      setGettingXML(false);
-                    }}
-                  >
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <FileCode className="text-green-700" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Descargar XML</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                </>
-              )}
-            </div>
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+                        setGettingXML(false);
+                      }}
+                    >
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <FileCode className="text-green-700" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Descargar XML</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                  </>
+                )}
+              </div>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </>
   );
 };
 
