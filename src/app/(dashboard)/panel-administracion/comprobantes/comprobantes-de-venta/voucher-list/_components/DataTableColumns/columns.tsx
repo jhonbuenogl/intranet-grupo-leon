@@ -68,7 +68,11 @@ export const columns = [
             <DialogTitle>JSON para close2u</DialogTitle>
 
             <div>
-              <JsonView className="" value={JSON.parse(info.getValue())} />
+              <JsonView
+                enableClipboard={true}
+                className=""
+                value={JSON.parse(info.getValue())}
+              />
             </div>
           </DialogHeader>
         </DialogContent>
