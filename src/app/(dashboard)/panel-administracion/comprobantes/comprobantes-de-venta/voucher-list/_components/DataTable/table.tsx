@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -19,14 +20,16 @@ import {
 } from "@/components/ui/table";
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,20 +44,49 @@ const DataTable = <TData, TValue>({
     pageIndex: 0,
     pageSize: 5,
   });
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     state: {
       pagination,
+      columnFilters,
     },
     onPaginationChange: setPagination,
+    onColumnFiltersChange: setColumnFilters,
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col gap-9 py-4">
+      <div className="flex gap-5">
+        <div>
+          <Label>Filtrar por nombre de cliente</Label>
+          <Input
+            className="w-full max-w-[300px]"
+            placeholder="Nombre cliente"
+            value={table.getColumn("Cliente")?.getFilterValue() as string}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              table.getColumn("Cliente")?.setFilterValue(e.currentTarget.value)
+            }
+          />
+        </div>
+        <div>
+          <Label>Filtrar por correlativo</Label>
+          <Input
+            className="w-full max-w-[300px]"
+            placeholder="Correlativo"
+            value={table.getColumn("Numero")?.getFilterValue() as string}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              table.getColumn("Numero")?.setFilterValue(e.currentTarget.value)
+            }
+          />
+        </div>
+      </div>
+
       <Table className="w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -96,7 +128,7 @@ const DataTable = <TData, TValue>({
         </TableBody>
       </Table>
 
-      <div className="flex items-center justify-between gap-8 mt-8">
+      <div className="flex items-center justify-between gap-8 mt-3">
         <div></div>
         <div className="flex items-center gap-8">
           <Button
