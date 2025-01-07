@@ -22,14 +22,26 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { FileCode, LoaderCircle, Send } from "lucide-react";
 import { useVoucherStore } from "@/zustand/VoucherStore/store";
+import { Worker, Viewer } from "@react-pdf-viewer/core";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
+import { ProgressBar } from "@react-pdf-viewer/core";
 
 const DocumentObtainedTable = () => {
   const voucherStore = useVoucherStore((state) => state);
   const [gettingPDF, setGettingPDF] = React.useState(false);
   const [gettingXML, setGettingXML] = React.useState(false);
+  const [PDFUrl, setPDFUrl] = React.useState<string | null>(null);
+  const renderLoader = (percentages: number) => (
+    <div style={{ width: "240px" }}>
+      <ProgressBar progress={Math.round(percentages)} />
+    </div>
+  );
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   return (
-    <>
+    <div className="flex flex-col gap-12">
       <Table>
         <TableHeader>
           <TableRow>
@@ -129,6 +141,8 @@ const DocumentObtainedTable = () => {
                     <div
                       onClick={async () => {
                         try {
+                          if (PDFUrl) URL.revokeObjectURL(PDFUrl);
+                          setPDFUrl(null);
                           setGettingPDF(true);
 
                           const response = await axios.get(
@@ -167,7 +181,7 @@ const DocumentObtainedTable = () => {
                           a.click();
                           a.remove();
 
-                          URL.revokeObjectURL(url);
+                          setPDFUrl(url);
 
                           toast({
                             title: "PDF Obtenido correctamente",
@@ -296,7 +310,21 @@ const DocumentObtainedTable = () => {
           </TableRow>
         </TableBody>
       </Table>
-    </>
+
+      <div>
+        {PDFUrl && (
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.js">
+            <div style={{ height: "750px" }}>
+              <Viewer
+                fileUrl={PDFUrl}
+                plugins={[defaultLayoutPluginInstance]}
+                renderLoader={renderLoader}
+              />
+            </div>
+          </Worker>
+        )}
+      </div>
+    </div>
   );
 };
 

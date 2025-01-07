@@ -56,7 +56,7 @@ const IssueForm = () => {
       const response = await sapHanaBackend.get(
         `/voucher/${values.documentType}/${values.serie}/${values.correlative}`
       );
-      // console.log(response);
+      console.log(response);
 
       voucherStore.setVoucher(
         response.data.voucher.map((voucher: any) => ({

@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack(config) {
+  webpack: (config) => {
     config.module.rules.push({
-      test: /\.pdf$/,
-      type: "asset/resource",
-      generator: {
-        filename: "static/pdf/[name].[hash][ext]",
-      },
+      test: /\.node$/,
+      use: "node-loader",
     });
+
     return config;
   },
 };
