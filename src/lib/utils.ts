@@ -102,6 +102,7 @@ export const makeFacturaJSON = (voucher: any) => {
     },
   };
 };
+
 // export const makeFacturaJSON = (voucher: any) => {
 //   return {
 //     anticipos: [],
@@ -199,6 +200,7 @@ export const makeFacturaJSON = (voucher: any) => {
 //     },
 //   };
 // };
+
 // export const makeFacturaJSON = (voucher: any) => {
 //   console.log({
 //     anticipos: [],
@@ -474,7 +476,9 @@ export const makeNotaCreditoJSON = (voucher: any) => {
         departamento: voucher[0].departamenteoReceptor,
         direccion: voucher[0].direccionReceptor,
         distrito: voucher[0].distritoReceptor,
-        pais: voucher[0].paisReceptor.toUpperCase(),
+        pais: voucher[0].paisReceptor
+          ? voucher[0].paisReceptor.toUpperCase()
+          : voucher[0].paisReceptor,
         provincia: voucher[0].provinciaReceptor,
         ubigeo: voucher[0].ubigeoReceptor,
         urbanizacion: voucher[0].urbanizacionReceptor,
@@ -621,6 +625,7 @@ export const voucherQueryHeadersDevelopment = {
   "X-Auth-Token":
     "p5Hp14nCxoiYTQCMmN2rfnbn8iraY8rEotiPsPrkhFrIJxH8aX+6cJilmD1YK64B",
 };
+
 export const voucherQueryHeadersProduction = {
   "Content-Type": "application/json",
   Authorization: "Basic QzJVYXV0b0BjbG9zZTJ1LnBlOkMyVWF1dG8yJCQ=",

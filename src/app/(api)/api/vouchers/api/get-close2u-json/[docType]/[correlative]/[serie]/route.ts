@@ -1,5 +1,9 @@
 import sapHanaBackend from "@/axios/sapHanaBackend";
-import { makeFacturaJSON } from "@/lib/utils";
+import {
+  makeBoletaJSON,
+  makeFacturaJSON,
+  makeNotaCreditoJSON,
+} from "@/lib/utils";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -24,7 +28,12 @@ export const GET = async (
 
     return NextResponse.json(
       {
-        close2uJson: makeFacturaJSON(response.data.voucher),
+        close2uJson:
+          docType === "01"
+            ? makeFacturaJSON(response.data.voucher)
+            : docType === "03"
+            ? makeBoletaJSON(response.data.voucher)
+            : makeNotaCreditoJSON(response.data.voucher),
       },
       { status: 200 }
     );

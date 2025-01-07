@@ -316,6 +316,7 @@ const DocumentObtainedTable = () => {
           <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.js">
             <div style={{ height: "750px" }}>
               <Viewer
+                theme={{ theme: "dark" }}
                 fileUrl={PDFUrl}
                 plugins={[defaultLayoutPluginInstance]}
                 renderLoader={renderLoader}
