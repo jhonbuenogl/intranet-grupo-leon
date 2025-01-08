@@ -38,7 +38,8 @@ export const GET = async () => {
 
     return NextResponse.json(
       {
-        message: "End-Point funcionando bien",
+        message:
+          "Nuevas rutas actualizadas correctamente para todos los usuarios",
         updatedUsers: updatedUsersDB,
       },
       { status: 200 }

@@ -4,6 +4,7 @@ import UserSelector from "../_components/UserSelector/selector";
 import { getUserById } from "@/db/queries/users/get-by-id";
 import { UserRoundSearch } from "lucide-react";
 import { getAllUsersWithAccess } from "@/db/queries/users/get-all-with-access";
+import UpdateAllUsersRoutePermissionsButton from "./_components/UpdateAllUsersRoutePermissionsButton/button";
 
 const getData = async ({ userId }: { userId: string }) => {
   const users = await getAllUsersWithAccess();
@@ -15,7 +16,17 @@ const Page = async ({ searchParams }: { searchParams: { uid: string } }) => {
   const data = await getData({ userId: searchParams.uid });
 
   return (
-    <section className="py-8 px-6 w-full">
+    <section className="py-8 px-6 w-full flex flex-col gap-4">
+      <div className="flex flex-col gap-3 w-full max-w-[600px]">
+        <p className="text-sm text-zinc-500">
+          Este botón sirve para actualizar los permisos de ruta para todos los
+          usuarios existentes en la intranet, los usuarios mantendrán su
+          configuración de permisos actual, lo que actualizarán son las nuevas
+          rutas o rutas que se hayan quitado en la intranet
+        </p>
+        <UpdateAllUsersRoutePermissionsButton />
+      </div>
+
       <div className="flex flex-col gap-6">
         <h2 className="text-xl font-medium">
           Elige un usuario y edita sus permisos

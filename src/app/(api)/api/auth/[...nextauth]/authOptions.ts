@@ -63,9 +63,9 @@ export const authOptions: NextAuthOptions = {
           } else {
             throw new Error("Contraseña incorrecta");
           }
+        } else {
+          throw new Error("Este correo no tiene acceso");
         }
-
-        throw new Error("Este correo no tiene acceso");
       },
     }),
   ],

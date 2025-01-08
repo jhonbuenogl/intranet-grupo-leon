@@ -24,6 +24,10 @@ export const POST = async (req: NextRequest) => {
       );
     } else {
       if (routePermissionStatusForAccessRouteIsTrue(userRoutePermissions)) {
+        return NextResponse.json(
+          { error: "Sólo el usuario maestro puede tener acceso a esta ruta" },
+          { status: 400 }
+        );
       }
     }
 
