@@ -117,8 +117,15 @@ export const POST = async (req: NextRequest) => {
           { status: 500 }
         );
       }
+      return NextResponse.json(
+        { error: "Error interno del servidor" },
+        { status: 500 }
+      );
     } else {
-      return NextResponse.json({ error }, { status: 500 });
+      return NextResponse.json(
+        { error: "Error interno del servidor" },
+        { status: 500 }
+      );
     }
   }
 };
