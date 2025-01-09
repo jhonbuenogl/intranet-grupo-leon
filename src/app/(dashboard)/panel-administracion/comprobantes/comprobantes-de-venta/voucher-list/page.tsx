@@ -19,6 +19,7 @@ const Page = async () => {
           <TabsTrigger value="facturas">Facturas</TabsTrigger>
           <TabsTrigger value="boletas">Boletas</TabsTrigger>
           <TabsTrigger value="notas-credito">Notas de Crédito</TabsTrigger>
+          <TabsTrigger value="notas-debito">Notas de Débito</TabsTrigger>
         </TabsList>
         <TabsContent value="facturas">
           <DataTable
@@ -36,6 +37,12 @@ const Page = async () => {
           <DataTable
             columns={columns as any}
             data={data.filter((voucher) => voucher.docType === "07")}
+          />
+        </TabsContent>
+        <TabsContent value="notas-debito">
+          <DataTable
+            columns={columns as any}
+            data={data.filter((voucher) => voucher.docType === "08")}
           />
         </TabsContent>
       </Tabs>

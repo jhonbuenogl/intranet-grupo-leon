@@ -13,5 +13,10 @@
     "name": "Nota de Crédito",
     "series": ["F001", "F003", "B001", "B003"],
     "code": "07"
+  },
+  "08": {
+    "name": "Nota de Débito",
+    "series": ["F001", "F003", "B001", "B003"],
+    "code": "08"
   }
 }
