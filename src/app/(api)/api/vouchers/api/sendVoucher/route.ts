@@ -79,6 +79,18 @@ export const POST = async (req: NextRequest) => {
               : voucherQueryHeadersProduction,
         }
       );
+    } else if (docType === "08") {
+      console.log("es nota de débito");
+      await axios.put(
+        "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/nota-debito",
+        makeNotaCreditoJSON(voucher),
+        {
+          headers:
+            process.env.NODE_ENV === "development"
+              ? voucherQueryHeadersDevelopment
+              : voucherQueryHeadersProduction,
+        }
+      );
     }
 
     await sendPDFByEmailToUsers({

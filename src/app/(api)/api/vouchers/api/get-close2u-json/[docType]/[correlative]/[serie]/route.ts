@@ -3,6 +3,7 @@ import {
   makeBoletaJSON,
   makeFacturaJSON,
   makeNotaCreditoJSON,
+  makeNotaDebitoJSON,
 } from "@/lib/utils";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
@@ -29,11 +30,13 @@ export const GET = async (
     return NextResponse.json(
       {
         close2uJson:
-          docType === "01"
+          docType === "01" || docType === "99"
             ? makeFacturaJSON(response.data.voucher)
             : docType === "03"
             ? makeBoletaJSON(response.data.voucher)
-            : makeNotaCreditoJSON(response.data.voucher),
+            : docType === "07"
+            ? makeNotaCreditoJSON(response.data.voucher)
+            : makeNotaDebitoJSON(response.data.voucher),
       },
       { status: 200 }
     );
