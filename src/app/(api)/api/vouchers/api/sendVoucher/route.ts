@@ -26,6 +26,24 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
+  if (
+    !voucher[0].direccionReceptor ||
+    !voucher[0].distritoReceptor ||
+    !voucher[0].paisReceptor ||
+    !voucher[0].provinciaReceptor ||
+    !voucher[0].ubigeoReceptor ||
+    !voucher[0].urbanizacionReceptor ||
+    !voucher[0].nombreComercialReceptor ||
+    !voucher[0].nombreLegalReceptor ||
+    !voucher[0].numeroDocumentoIdentidadReceptor ||
+    !voucher[0].tipoDocumentoIdentidadReceptor
+  ) {
+    return NextResponse.json(
+      { error: "Hace falta algún dato importante del receptor" },
+      { status: 400 }
+    );
+  }
+
   try {
     if (docType === "01") {
       console.log("es factura");
