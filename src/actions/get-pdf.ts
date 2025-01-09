@@ -34,6 +34,8 @@ export const getVoucherPDFPath = async ({
         : voucherQueryHeadersProduction,
   });
 
+  console.log(response);
+
   const pdfBase64 = response.data;
 
   const pdfDirPath = path.join(process.cwd(), `/public/vouchers/`);

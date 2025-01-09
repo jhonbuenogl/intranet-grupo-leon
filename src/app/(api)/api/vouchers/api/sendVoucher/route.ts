@@ -43,7 +43,7 @@ export const POST = async (req: NextRequest) => {
   }
 
   try {
-    if (docType === "01") {
+    if (docType === "01" || docType === "99") {
       console.log("es factura");
       await axios.put(
         "https://dev.invoice2u.pe/apiemisor/invoice2u/integracion/factura",
@@ -111,7 +111,7 @@ export const POST = async (req: NextRequest) => {
         montoTotal: voucher[0].monto ? voucher[0].monto : "240.00",
         createdBy: session.user?.name as string,
         close2u_json: JSON.stringify(
-          docType === "01"
+          docType === "01" || docType === "99"
             ? makeFacturaJSON(voucher)
             : docType === "03"
             ? makeBoletaJSON(voucher)

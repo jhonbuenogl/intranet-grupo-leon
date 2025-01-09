@@ -18,5 +18,10 @@
     "name": "Nota de Débito",
     "series": ["F001", "F003", "B001", "B003"],
     "code": "08"
+  },
+  "99": {
+    "name": "Factura de Anticipo",
+    "series": ["F001", "F002", "F003"],
+    "code": "99"
   }
 }
