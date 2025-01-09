@@ -85,7 +85,9 @@ export const makeFacturaJSON = (voucher: any) => {
         departamento: voucher[0].departamenteoReceptor,
         direccion: voucher[0].direccionReceptor,
         distrito: voucher[0].distritoReceptor,
-        pais: voucher[0].paisReceptor.toUpperCase(),
+        pais: voucher[0].paisReceptor
+          ? voucher[0].paisReceptor.toUpperCase()
+          : null,
         provincia: voucher[0].provinciaReceptor,
         ubigeo: voucher[0].ubigeoReceptor,
         urbanizacion: voucher[0].urbanizacionReceptor,
