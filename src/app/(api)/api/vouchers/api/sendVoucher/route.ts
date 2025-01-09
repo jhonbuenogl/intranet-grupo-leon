@@ -31,8 +31,6 @@ export const POST = async (req: NextRequest) => {
     !voucher[0].distritoReceptor ||
     !voucher[0].paisReceptor ||
     !voucher[0].provinciaReceptor ||
-    !voucher[0].ubigeoReceptor ||
-    !voucher[0].urbanizacionReceptor ||
     !voucher[0].nombreComercialReceptor ||
     !voucher[0].nombreLegalReceptor ||
     !voucher[0].numeroDocumentoIdentidadReceptor ||
