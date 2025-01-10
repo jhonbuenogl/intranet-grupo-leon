@@ -1,16 +1,14 @@
 import jwt from "jsonwebtoken";
 import { SendMailOptions } from "nodemailer";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/(api)/api/auth/[...nextauth]/authOptions";
 import nodemailerTransporter from "@/lib/nodemailer";
 
-export const sendChangePasswordEmail = async (email: string) => {
-  const session = await getServerSession(authOptions);
-
-  const token = jwt.sign(
-    { id: session?.user.id },
-    process.env.JWT_SECRET as string
-  );
+export const sendChangePasswordEmail = async (
+  email: string,
+  userId: string
+) => {
+  const token = jwt.sign({ id: userId }, process.env.JWT_SECRET as string, {
+    expiresIn: 60 * 10,
+  });
 
   const mailOptions: SendMailOptions = {
     from: "sap@cbs.pe", // Dirección de correo del remitente

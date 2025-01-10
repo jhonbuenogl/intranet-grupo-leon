@@ -51,6 +51,17 @@ export const authOptions: NextAuthOptions = {
             });
 
             intranetUser = newUser;
+          } else {
+            if (intranetUser.email === process.env.MASTER_USER) {
+              await prisma.user.update({
+                where: { email: intranetUser.email },
+                data: {
+                  routePermissions: JSON.stringify(
+                    updateRoutePermissionForAdmin(intranetRoutesData)
+                  ),
+                },
+              });
+            }
           }
 
           const correctPassword = await bcrypt.compare(

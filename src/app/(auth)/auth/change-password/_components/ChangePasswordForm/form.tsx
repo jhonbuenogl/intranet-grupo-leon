@@ -36,7 +36,7 @@ const ChangePasswordForm = () => {
     try {
       const response = await axios.post(
         "/api/emails/api/send-change-password-email",
-        values
+        { ...values }
       );
 
       toast({
@@ -45,10 +45,25 @@ const ChangePasswordForm = () => {
       });
     } catch (error) {
       console.log(error);
-      toast({
-        title: "Error interno del servidor",
-        description: "Intentalo de nuevo o intentalo más tarde",
-      });
+
+      if (axios.isAxiosError(error)) {
+        if (
+          error.response?.data.error &&
+          typeof error.response?.data.error === "string"
+        ) {
+          toast({
+            title: error.response.data.error,
+            description: new Date().toLocaleString(),
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error interno del servidor",
+            description: "Inténtalo de nuevo o inténtalo más tarde",
+            variant: "destructive",
+          });
+        }
+      }
     }
   };
 
